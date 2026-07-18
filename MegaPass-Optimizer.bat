@@ -2,19 +2,19 @@
 :: [AUTO-ADMIN] Elevasi Hak Akses Administrator
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath \"%~f0\" -Verb RunAs"
     exit /b
 )
 
 pushd "%~dp0"
-title MEGAPASS Windows Optimizer v2.4
+title MEGAPASS Windows Optimizer v2.5
 echo ===================================================
 echo     MEGAPASS INTRA SOLUSINDO - WINDOWS OPTIMIZER
 echo ===================================================
 echo.
 echo [*] Memulai Protokol Optimasi Sistem...
 echo.
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$c = [IO.File]::ReadAllText('%~f0') -split '# --- POWERSHELL CORE LOGIC ---'; iex $c[1]"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$scriptPath = \"%~f0\"; $c = [IO.File]::ReadAllText($scriptPath) -split '# --- POWERSHELL CORE LOGIC ---'; iex $c[1]"
 echo.
 echo ===================================================
 echo [+] All optimizations applied successfully!
@@ -25,7 +25,7 @@ exit /b
 # --- POWERSHELL CORE LOGIC ---
 $ErrorActionPreference = "SilentlyContinue"
 
-Write-Host ">>> Starting MegaPass Windows Optimization v2.4 <<<" -ForegroundColor Cyan
+Write-Host ">>> Starting MegaPass Windows Optimization v2.5 <<<" -ForegroundColor Cyan
 Write-Host "---------------------------------------------------" -ForegroundColor Gray
 
 # Detect OS Build
@@ -71,7 +71,25 @@ if ($IsWin11) {
     Set-ItemProperty -Path $AdvPath -Name "TaskbarAl" -Value 1 -Force
 }
 
-# 4. Uninstall Bloatware (Microsoft & 3rd Party Ads, Antivirus)
+# 4. Taskbar Behavior - Disable Auto-Hide
+Write-Host "[*] Disabling Taskbar Auto-Hide..." -ForegroundColor Yellow
+$TaskbarPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3"
+if (Test-Path $TaskbarPath) {
+    # Get current binary data
+    $settings = Get-ItemProperty -Path $TaskbarPath -Name "Settings" -ErrorAction SilentlyContinue
+    if ($settings) {
+        $data = $settings.Settings
+        # Byte 8 controls auto-hide: bit 0 = auto-hide enabled. Clear bit 0 to disable.
+        if ($data[8] -band 1) {
+            $data[8] = $data[8] -band 0xFE
+            Set-ItemProperty -Path $TaskbarPath -Name "Settings" -Value $data -Force
+        }
+    }
+}
+# Also set via Advanced registry (fallback method)
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAutoHideDesktop" -Value 0 -Force
+
+# 5. Uninstall Bloatware (Microsoft & 3rd Party Ads, Antivirus)
 Write-Host "[*] Uninstalling Windows Bloatware (Safe Mode - Driver Utilities Preserved)..." -ForegroundColor Yellow
 $BloatApps = @(
     # Microsoft & Standard Bloat
@@ -90,7 +108,7 @@ foreach ($app in $BloatApps) {
     $ProvisionedApps | Where-Object {$_.DisplayName -like $app} | ForEach-Object { Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName | Out-Null }
 }
 
-# 5. Best Performance Visual Settings
+# 6. Best Performance Visual Settings
 Write-Host "[*] Adjusting Visual Settings for Best Performance..." -ForegroundColor Yellow
 $VisualEffectsPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects"
 if (!(Test-Path $VisualEffectsPath)) { New-Item -Path $VisualEffectsPath -Force | Out-Null }
@@ -102,7 +120,7 @@ Set-ItemProperty -Path $ExplorerAdvPath -Name "ListviewAlphaSelect" -Value 0 -Fo
 Set-ItemProperty -Path $ExplorerAdvPath -Name "ListviewShadow" -Value 0 -Force
 Set-ItemProperty -Path $ExplorerAdvPath -Name "TaskbarAnimations" -Value 0 -Force
 
-# 6. Disable Windows Defender (Registry & Cmdlet)
+# 7. Disable Windows Defender (Registry & Cmdlet)
 Write-Host "[*] Disabling Windows Defender..." -ForegroundColor Yellow
 Set-MpPreference -DisableRealtimeMonitoring $true -DisableBehaviorMonitoring $true -DisableIOAVProtection $true -SignatureDisableUpdateOnStartupWithoutEngine $true -DisableArchiveScanning $true -DisableIntrusionPreventionSystem $true -DisableScriptScanning $true
 
@@ -114,7 +132,7 @@ $RealtimePath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Pr
 if (!(Test-Path $RealtimePath)) { New-Item -Path $RealtimePath -Force | Out-Null }
 Set-ItemProperty -Path $RealtimePath -Name "DisableRealtimeMonitoring" -Value 1 -Force
 
-# 7. Pause Windows Update until 2099
+# 8. Pause Windows Update until 2099
 Write-Host "[*] Pausing Windows Updates until 2099..." -ForegroundColor Yellow
 $UpdatePath = "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings"
 if (!(Test-Path $UpdatePath)) { New-Item -Path $UpdatePath -Force | Out-Null }
@@ -122,20 +140,20 @@ Set-ItemProperty -Path $UpdatePath -Name "PauseUpdatesExpiryTime" -Value "2099-1
 Set-ItemProperty -Path $UpdatePath -Name "PauseFeatureUpdatesStartTime" -Value "2026-01-01T00:00:00Z" -Force
 Set-ItemProperty -Path $UpdatePath -Name "PauseQualityUpdatesStartTime" -Value "2026-01-01T00:00:00Z" -Force
 
-# 8. Folder Options Settings
+# 9. Folder Options Settings
 Write-Host "[*] Configuring Folder Options..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LaunchTo" -Value 1 -Force
 $ExplorerPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer"
 Set-ItemProperty -Path $ExplorerPath -Name "ShowRecent" -Value 0 -Force
 Set-ItemProperty -Path $ExplorerPath -Name "ShowFrequent" -Value 0 -Force
 
-# 9. This PC Desktop Shortcut
+# 10. This PC Desktop Shortcut
 Write-Host "[*] Creating 'This PC' desktop icon..." -ForegroundColor Yellow
 $DesktopIcons = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel"
 if (!(Test-Path $DesktopIcons)) { New-Item -Path $DesktopIcons -Force | Out-Null }
 Set-ItemProperty -Path $DesktopIcons -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Value 0 -Force
 
-# 10. Clean Cache, Temp & System Files
+# 11. Clean Cache, Temp & System Files
 Write-Host "[*] Cleaning Package Cache & Network Cache..." -ForegroundColor Yellow
 winget cache clean --accept-source-agreements | Out-Null
 ipconfig /flushdns | Out-Null
@@ -161,7 +179,7 @@ foreach ($path in $TempPaths) {
 }
 Clear-RecycleBin -Confirm:$false
 
-# 11. Reset Bags & Safe Explorer Relaunch
+# 12. Reset Bags & Safe Explorer Relaunch
 Write-Host "[*] Restarting Windows Explorer & Resetting Folder Views..." -ForegroundColor Yellow
 Stop-Process -Name explorer -Force
 Start-Sleep -Seconds 2
@@ -170,7 +188,7 @@ Start-Sleep -Seconds 2
 Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags" -Recurse -Force
 Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU" -Recurse -Force
 
-# Safe Relaunch Explorer (Invoking native explorer directly is safe and Windows handles de-elevation to user automatically)
+# Safe Relaunch Explorer
 Start-Process "explorer.exe"
 
 Write-Host "---------------------------------------------------" -ForegroundColor Gray
