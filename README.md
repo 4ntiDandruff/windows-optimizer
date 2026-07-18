@@ -1,4 +1,4 @@
-# 🚀 MegaPass Windows Optimizer v2.4
+# 🚀 MegaPass Windows Optimizer v2.5
 
 > Tool optimasi Windows 10 & 11 sekali klik untuk PC/laptop baru beli atau habis install ulang.
 > Dibuat oleh **MEGAPASS Intra Solusindo** — Servis HP & Laptop Sidoarjo.
@@ -26,6 +26,10 @@ Mempercepat proses setup workstation customer dengan menghapus bloatware, memati
 - Menyembunyikan icon **Chat (Teams)** dari Taskbar
 - Menyembunyikan tombol **Task View (Multi Windows)** dari Taskbar
 - Posisi Taskbar **tetap di tengah** (Center)
+
+### 📌 Taskbar Behavior
+- **Nonaktifkan auto-hide Taskbar** (taskbar selalu terlihat, tidak hilang otomatis)
+- Registry tweak: `StuckRects3` binary data + `TaskbarAutoHideDesktop`
 
 ### 🧹 Pembersihan Bloatware
 - **Microsoft bloatware**: Cortana, Xbox, Solitaire, OfficeHub, SkypeApp, FeedbackHub, GetHelp, ZuneVideo, ZuneMusic, 3DBuilder, MixedReality, OneNote, People, StickyNotes, BingWeather, BingNews, BingSports, BingFinance, YourPhone
@@ -76,6 +80,7 @@ Mempercepat proses setup workstation customer dengan menghapus bloatware, memati
 | 🌐 Internet | **Tidak diperlukan** (100% offline) |
 | 🔐 Hak Akses | Administrator (otomatis diminta saat dijalankan) |
 | 📄 Format File | CRLF (Windows native) |
+| 👤 Username | ✅ **Kompatibel dengan username yang mengandung apostrophe & karakter khusus** |
 
 ---
 
@@ -87,7 +92,7 @@ Mempercepat proses setup workstation customer dengan menghapus bloatware, memati
 4. **Tunggu** proses optimasi selesai
 5. **Selesai** — PC siap digunakan customer
 
-```
+```bash
 git clone https://github.com/4ntiDandruff/windows-optimizer.git
 ```
 
@@ -103,13 +108,14 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 │  - Deteksi hak akses Administrator  │
 │  - Auto-elevasi UAC                 │
 │  - Memanggil PowerShell via -split  │
+│  - Path escaping untuk username     │
 └──────────────┬──────────────────────┘
                │
                ▼
 ┌─────────────────────────────────────┐
-│  POWERSHELL ENGINE (Baris 25-177)   │
+│  POWERSHELL ENGINE (Baris 25-195)   │
 │  - Auto-detect Windows 10 / 11     │
-│  - 11 modul optimasi               │
+│  - 12 modul optimasi               │
 │  - Registry tweaks                  │
 │  - Cache cleanup                    │
 │  - Explorer safe relaunch           │
@@ -118,14 +124,21 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 
 ### 🔑 Teknologi Kunci
 - **Dynamic Script Splitter**: Menggunakan `-split` berbasis string penanda, bukan nomor baris statis
+- **Path Escaping**: Variable wrapping untuk handle username dengan apostrophe/karakter khusus
 - **DISM Single-Query**: Query provisioned packages sekali di luar loop untuk performa optimal
 - **PS 5.1 Compatible**: Semua syntax kompatibel dengan PowerShell bawaan Windows
 
 ---
 
-## 📋 Changelog
+## 🐛 Bug Fixes
 
-### v2.4 (Juli 2025)
+### v2.5 (Juli 2026)
+- ✅ **CRITICAL FIX**: Path escaping untuk username dengan apostrophe (contoh: `King's Sulaiman`)
+- ✅ **CRITICAL FIX**: Path escaping untuk username dengan karakter khusus (`#`, space, dll)
+- ✅ **NEW FEATURE**: Disable taskbar auto-hide behavior
+- ✅ PowerShell command sekarang wrap path dalam variable untuk proper escaping
+
+### v2.4 (Juli 2026)
 - ✅ Single hybrid `.bat` file (gak perlu file tambahan)
 - ✅ Modern UAC elevation (tanpa file `.vbs` sementara)
 - ✅ Dynamic script splitter (kebal perubahan jumlah baris)
@@ -137,9 +150,15 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 
 ---
 
+## 📋 Known Issues
+
+⚠️ **Taskbar auto-hide disable** memerlukan restart explorer atau logout/login untuk efek penuh pada beberapa sistem.
+
+---
+
 ## 👨‍💻 Author
 
-**MEGAPASS Intra Solusindo**
+**MEGAPASS Intra Solusindo**  
 Servis HP & Laptop Sidoarjo
 
 ---
