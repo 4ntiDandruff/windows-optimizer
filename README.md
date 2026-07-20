@@ -1,4 +1,4 @@
-# 🚀 MegaPass Windows Optimizer v2.7
+# 🚀 MegaPass Windows Optimizer v3.0
 
 > Tool optimasi Windows 10 & 11 sekali klik untuk PC/laptop baru beli atau habis install ulang.
 > Dibuat oleh **MEGAPASS Intra Solusindo** — Servis HP & Laptop Sidoarjo.
@@ -36,6 +36,7 @@ Mempercepat proses setup workstation customer dengan menghapus bloatware, memati
 - **Iklan 3rd party**: Disney, Spotify, TikTok, Instagram, CandyCrush, Facebook, Twitter, LinkedIn, Clipchamp, WhatsApp, ByteDance
 - **Trial antivirus**: McAfee, Norton, Avast, AVG
 - ⚠️ **Utility vendor TIDAK dihapus**: MyASUS, Lenovo Vantage, Dell SupportAssist, HP Support Assistant (berguna untuk update driver resmi)
+- 📊 **Live Progress**: Menampilkan nama aplikasi yang sedang dihapus ke layar secara real-time.
 
 ### 🎨 Visual Performance
 - Mengubah visual effects ke **Adjust for Best Performance**
@@ -43,7 +44,7 @@ Mempercepat proses setup workstation customer dengan menghapus bloatware, memati
 - Registry tweak: `UserPreferencesMask`, `MinAnimate`, `TaskbarAnimations`
 
 ### 🛡️ Disable Windows Defender
-- Menonaktifkan real-time protection via cmdlet `Set-MpPreference`
+- Web protection & real-time protection dimatikan via cmdlet `Set-MpPreference`
 - Hard lock via registry Policies (`DisableAntiSpyware`, `DisableRealtimeMonitoring`)
 
 ### ⏸️ Pause Windows Update
@@ -80,7 +81,7 @@ Mempercepat proses setup workstation customer dengan menghapus bloatware, memati
 | 🌐 Internet | **Tidak diperlukan** (100% offline) |
 | 🔐 Hak Akses | Administrator (otomatis diminta saat dijalankan) |
 | 📄 Format File | CRLF (Windows native) |
-| 👤 Username | ✅ **Kompatibel dengan username yang mengandung apostrophe & karakter khusus** |
+| 👤 Username | ✅ **Kompatibel dengan username yang mengandung apostrophe, spasi & karakter khusus** |
 
 ---
 
@@ -106,14 +107,14 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 ┌─────────────────────────────────────┐
 │  BATCH LAUNCHER (Baris 1-23)        │
 │  - Deteksi hak akses Administrator  │
-│  - Auto-elevasi UAC                 │
+│  - Auto-elevasi UAC (cmd.exe com)   │
 │  - Memanggil PowerShell via -split  │
-│  - Path escaping untuk username     │
+│  - Path passing via $args[0]        │
 └──────────────┬──────────────────────┘
                │
                ▼
 ┌─────────────────────────────────────┐
-│  POWERSHELL ENGINE (Baris 25-195)   │
+│  POWERSHELL ENGINE (Baris 25+)      │
 │  - Auto-detect Windows 10 / 11     │
 │  - 12 modul optimasi               │
 │  - Registry tweaks                  │
@@ -124,35 +125,20 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 
 ### 🔑 Teknologi Kunci
 - **Dynamic Script Splitter**: Menggunakan `-split` berbasis string penanda, bukan nomor baris statis
-- **Path Escaping**: Variable wrapping untuk handle username dengan apostrophe/karakter khusus
+- **Parameter Passing**: Mengirimkan path batch file sebagai argument luar (`$args[0]`) sehingga kebal dari parsing string literal di PowerShell
 - **DISM Single-Query**: Query provisioned packages sekali di luar loop untuk performa optimal
 - **PS 5.1 Compatible**: Semua syntax kompatibel dengan PowerShell bawaan Windows
 
 ---
 
-## 🐛 Bug Fixes
+## 🐛 Changelog
 
-### v2.7 (Juli 2026)
-- ✅ **CRITICAL FIX**: Path escaping untuk username dengan apostrophe (contoh: `King's Sulaiman`)
-- ✅ **CRITICAL FIX**: Path escaping untuk username dengan karakter khusus (`#`, space, dll)
-- ✅ **NEW FEATURE**: Disable taskbar auto-hide behavior
-- ✅ PowerShell command sekarang wrap path dalam variable untuk proper escaping
-
-### v2.4 (Juli 2026)
-- ✅ Single hybrid `.bat` file (gak perlu file tambahan)
-- ✅ Modern UAC elevation (tanpa file `.vbs` sementara)
-- ✅ Dynamic script splitter (kebal perubahan jumlah baris)
-- ✅ Auto-detect Windows 10 / 11
-- ✅ DISM query optimization (1x fetch, bukan 34x loop)
-- ✅ PS 5.1 compatible syntax
-- ✅ Safe explorer relaunch
-- ✅ Zero NBSP, CRLF clean
-
----
-
-## 📋 Known Issues
-
-⚠️ **Taskbar auto-hide disable** memerlukan restart explorer atau logout/login untuk efek penuh pada beberapa sistem.
+### v3.0 (Juli 2026)
+- 👑 **REBUILD TOTAL**: Dibuat ulang dari nol untuk menghilangkan seluruh bug warisan.
+- 👑 **BULLETPROOF PARAMETER PASSING**: Menggunakan pembungkus argumen PowerShell `$args[0]` untuk mempassing path batch file asli. 100% kebal dari bug parser jika nama folder mengandung tanda kutip satu (`'`), dollar (`$`), spasi, dsb.
+- 👑 **UAC RUNAS STABILITY**: Menggunakan `cmd.exe` argument list di PowerShell untuk melakukan elevasi UAC dengan aman tanpa resiko string splitting.
+- ⚡ **OPTIMIZED DISM & LIVE PROGRESS**: Query DISM dilakukan satu kali di memori dan progres uninstall setiap aplikasi ditampilkan ke console secara real-time.
+- 🧹 Bersih dari byte non-breaking space (NBSP) ilegal dan berakhiran CRLF murni.
 
 ---
 
