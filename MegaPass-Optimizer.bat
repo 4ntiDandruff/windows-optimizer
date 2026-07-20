@@ -1,8 +1,9 @@
 @echo off
 :: [AUTO-ADMIN] Elevasi Hak Akses Administrator
+set "SCRIPT_PATH=%~f0"
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath 'cmd.exe' -ArgumentList \"/c \"\"%~f0\"\"\" -Verb RunAs"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath $env:SCRIPT_PATH -Verb RunAs"
     exit /b
 )
 
@@ -14,7 +15,7 @@ echo ===================================================
 echo.
 echo [*] Memulai Protokol Optimasi Sistem...
 echo.
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$c = (Get-Content -LiteralPath $args[0] -Raw) -split '# --- POWERSHELL ---'; iex $c[1]" "%~f0"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$c = (Get-Content -LiteralPath $env:SCRIPT_PATH -Raw) -split '# --- POWERSHELL ---'; iex $c[1]"
 echo.
 echo ===================================================
 echo [+] All optimizations applied successfully!
