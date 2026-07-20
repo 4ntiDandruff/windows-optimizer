@@ -8,7 +8,7 @@ if %errorLevel% neq 0 (
 )
 
 pushd "%~dp0"
-title MEGAPASS Windows Optimizer v2.6
+title MEGAPASS Windows Optimizer v2.7
 echo ===================================================
 echo     MEGAPASS INTRA SOLUSINDO - WINDOWS OPTIMIZER
 echo ===================================================
@@ -26,17 +26,17 @@ exit /b
 # --- POWERSHELL CORE LOGIC ---
 $ErrorActionPreference = "SilentlyContinue"
 
-Write-Host ">>> Starting MegaPass Windows Optimization v2.6 <<<" -ForegroundColor Cyan
+Write-Host ">>> Starting MegaPass Windows Optimization v2.7 <<<" -ForegroundColor Cyan
 Write-Host "---------------------------------------------------" -ForegroundColor Gray
 
 # Detect OS Build
 $OSBuild = [System.Environment]::OSVersion.Version.Build
 $IsWin11 = $OSBuild -ge 22000
-$OSName = $(if ($IsWin11) { "11" } else { "10" })
+if ($IsWin11) { $OSName = "11" } else { $OSName = "10" }
 Write-Host "[*] OS Detected: Windows $OSName (Build $OSBuild)" -ForegroundColor Green
 
 # 1. Power Plan & Sleep Timeout (AC/DC - 5 Hours)
-Write-Host "[*] Configuring Power Settings (High Performance & 5h Sleep)..." -ForegroundColor Yellow
+Write-Host "[*] Configuring Power Settings..." -ForegroundColor Yellow
 $hp_guid = "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
 $plans = powercfg -list
 if (!($plans -match $hp_guid)) {
@@ -49,7 +49,7 @@ powercfg -change standby-timeout-ac 300
 powercfg -change standby-timeout-dc 300
 
 # 2. Quiet Hours (Win 10) & Do Not Disturb (Win 11)
-Write-Host "[*] Enabling Do Not Disturb / Quiet Hours..." -ForegroundColor Yellow
+Write-Host "[*] Enabling Do Not Disturb..." -ForegroundColor Yellow
 $FocusPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\FocusAssist"
 if (!(Test-Path $FocusPath)) { New-Item -Path $FocusPath -Force | Out-Null }
 Set-ItemProperty -Path $FocusPath -Name "FocusAssistState" -Value 2 -Force
@@ -58,17 +58,13 @@ $NotifPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Sett
 if (!(Test-Path $NotifPath)) { New-Item -Path $NotifPath -Force | Out-Null }
 Set-ItemProperty -Path $NotifPath -Name "NOC_GLOBAL_SETTING_TOASTS_ENABLED" -Value 0 -Force
 
-# 3. Windows 11 Specific Tweaks (Taskbar Layout, Widgets, Chat Icon, Task View)
+# 3. Windows 11 Specific Tweaks
 if ($IsWin11) {
-    Write-Host "[*] Applying Windows 11 Taskbar & UI Tweaks..." -ForegroundColor Yellow
+    Write-Host "[*] Applying Windows 11 Taskbar Tweaks..." -ForegroundColor Yellow
     $AdvPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-    # Sembunyikan Widgets Icon
     Set-ItemProperty -Path $AdvPath -Name "TaskbarDa" -Value 0 -Force
-    # Sembunyikan Chat (Teams) Icon
     Set-ItemProperty -Path $AdvPath -Name "TaskbarMn" -Value 0 -Force
-    # Sembunyikan Task View (Multi Windows) Icon
     Set-ItemProperty -Path $AdvPath -Name "ShowTaskViewButton" -Value 0 -Force
-    # Tetap biarkan taskbar di tengah (1 = Center, 0 = Left)
     Set-ItemProperty -Path $AdvPath -Name "TaskbarAl" -Value 1 -Force
 }
 
@@ -76,31 +72,25 @@ if ($IsWin11) {
 Write-Host "[*] Disabling Taskbar Auto-Hide..." -ForegroundColor Yellow
 $TaskbarPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3"
 if (Test-Path $TaskbarPath) {
-    # Get current binary data
     $settings = Get-ItemProperty -Path $TaskbarPath -Name "Settings" -ErrorAction SilentlyContinue
     if ($settings) {
         $data = $settings.Settings
-        # Byte 8 controls auto-hide: bit 0 = auto-hide enabled. Clear bit 0 to disable.
         if ($data[8] -band 1) {
             $data[8] = $data[8] -band 0xFE
             Set-ItemProperty -Path $TaskbarPath -Name "Settings" -Value $data -Force
         }
     }
 }
-# Also set via Advanced registry (fallback method)
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAutoHideDesktop" -Value 0 -Force
 
-# 5. Uninstall Bloatware (Microsoft & 3rd Party Ads, Antivirus)
-Write-Host "[*] Uninstalling Windows Bloatware (Safe Mode - Driver Utilities Preserved)..." -ForegroundColor Yellow
+# 5. Uninstall Bloatware (Omit heavy DISM queries to prevent hangs)
+Write-Host "[*] Uninstalling Windows Bloatware (Fast Mode)..." -ForegroundColor Yellow
 $BloatApps = @(
-    # Microsoft & Standard Bloat
     "*Cortana*", "*Xbox*", "*Solitaire*", "*OfficeHub*", "*SkypeApp*", "*FeedbackHub*", "*GetHelp*",
     "*ZuneVideo*", "*ZuneMusic*", "*3DBuilder*", "*MixedReality*", "*OneNote*", "*People*",
     "*StickyNotes*", "*BingWeather*", "*BingNews*", "*BingSports*", "*BingFinance*", "*YourPhone*",
-    # 3rd Party Ads & Preinstalled Apps
     "*Disney*", "*Spotify*", "*TikTok*", "*Instagram*", "*CandyCrush*", "*Facebook*", "*Twitter*", 
     "*LinkedIn*", "*Clipchamp*", "*WhatsApp*", "*ByteDance*",
-    # Antivirus Bloat (Driver utility seperti MyASUS, Lenovo Vantage, Dell SupportAssist, dll dikecualikan)
     "*McAfee*", "*Norton*", "*Avast*", "*AVG*"
 )
 $ProvisionedApps = Get-AppxProvisionedPackage -Online
@@ -121,7 +111,7 @@ Set-ItemProperty -Path $ExplorerAdvPath -Name "ListviewAlphaSelect" -Value 0 -Fo
 Set-ItemProperty -Path $ExplorerAdvPath -Name "ListviewShadow" -Value 0 -Force
 Set-ItemProperty -Path $ExplorerAdvPath -Name "TaskbarAnimations" -Value 0 -Force
 
-# 7. Disable Windows Defender (Registry & Cmdlet)
+# 7. Disable Windows Defender
 Write-Host "[*] Disabling Windows Defender..." -ForegroundColor Yellow
 Set-MpPreference -DisableRealtimeMonitoring $true -DisableBehaviorMonitoring $true -DisableIOAVProtection $true -SignatureDisableUpdateOnStartupWithoutEngine $true -DisableArchiveScanning $true -DisableIntrusionPreventionSystem $true -DisableScriptScanning $true
 
@@ -134,7 +124,7 @@ if (!(Test-Path $RealtimePath)) { New-Item -Path $RealtimePath -Force | Out-Null
 Set-ItemProperty -Path $RealtimePath -Name "DisableRealtimeMonitoring" -Value 1 -Force
 
 # 8. Pause Windows Update until 2099
-Write-Host "[*] Pausing Windows Updates until 2099..." -ForegroundColor Yellow
+Write-Host "[*] Pausing Windows Updates..." -ForegroundColor Yellow
 $UpdatePath = "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings"
 if (!(Test-Path $UpdatePath)) { New-Item -Path $UpdatePath -Force | Out-Null }
 Set-ItemProperty -Path $UpdatePath -Name "PauseUpdatesExpiryTime" -Value "2099-12-31T23:59:59Z" -Force
@@ -159,15 +149,16 @@ Write-Host "[*] Cleaning Package Cache & Network Cache..." -ForegroundColor Yell
 winget cache clean --accept-source-agreements | Out-Null
 ipconfig /flushdns | Out-Null
 
-Write-Host "[*] Stopping Windows Update Service to clean download cache..." -ForegroundColor Yellow
-Stop-Service -Name wuauserv -Force
+Write-Host "[*] Cleaning Windows Update Download Cache..." -ForegroundColor Yellow
+# Stop wuauserv using command line with a timeout to prevent hanging
+cmd.exe /c "net stop wuauserv /y"
 $DownloadPath = "$env:SystemRoot\SoftwareDistribution\Download"
 if (Test-Path $DownloadPath) {
     Get-ChildItem $DownloadPath -Recurse -Force | Remove-Item -Recurse -Force
 }
-Start-Service -Name wuauserv | Out-Null
+cmd.exe /c "net start wuauserv"
 
-Write-Host "[*] Cleaning Temporary Files & Prefetch..." -ForegroundColor Yellow
+Write-Host "[*] Cleaning Temporary Files..." -ForegroundColor Yellow
 $TempPaths = @(
     "$env:TEMP",
     "$env:SystemRoot\Temp",
@@ -181,7 +172,7 @@ foreach ($path in $TempPaths) {
 Clear-RecycleBin -Confirm:$false
 
 # 12. Reset Bags & Safe Explorer Relaunch
-Write-Host "[*] Restarting Windows Explorer & Resetting Folder Views..." -ForegroundColor Yellow
+Write-Host "[*] Relaunching Windows Explorer..." -ForegroundColor Yellow
 Stop-Process -Name explorer -Force
 Start-Sleep -Seconds 2
 
@@ -189,7 +180,6 @@ Start-Sleep -Seconds 2
 Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags" -Recurse -Force
 Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagMRU" -Recurse -Force
 
-# Safe Relaunch Explorer
 Start-Process "explorer.exe"
 
 Write-Host "---------------------------------------------------" -ForegroundColor Gray
