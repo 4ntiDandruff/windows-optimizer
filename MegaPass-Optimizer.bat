@@ -3,12 +3,12 @@
 set "SCRIPT_PATH=%~f0"
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath $env:SCRIPT_PATH -Verb RunAs"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath 'cmd.exe' -ArgumentList \"/c `\"$env:SCRIPT_PATH`\"\" -Verb RunAs"
     exit /b
 )
 
 pushd "%~dp0"
-title MEGAPASS Windows Optimizer v3.0
+title MEGAPASS Windows Optimizer v3.0.2
 echo ===================================================
 echo     MEGAPASS INTRA SOLUSINDO - WINDOWS OPTIMIZER
 echo ===================================================
@@ -26,8 +26,8 @@ exit /b
 # --- POWERSHELL ---
 $ErrorActionPreference = "SilentlyContinue"
 
-Write-Host ">>> Starting MegaPass Windows Optimization v3.0 <<<" -ForegroundColor Cyan
-Write-Host "---------------------------------------------------" -ForegroundColor Gray
+Write-Host ">>> Starting MegaPass Windows Optimization v3.0.2 <<<" -ForegroundColor Cyan
+Write-Host "-----------------------------------------------------" -ForegroundColor Gray
 
 # 1. Detect OS
 $OSBuild = [System.Environment]::OSVersion.Version.Build
@@ -106,7 +106,8 @@ Write-Host "[*] Optimizing Visual Effects for Performance..." -ForegroundColor Y
 $VisualEffectsPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects"
 if (!(Test-Path $VisualEffectsPath)) { New-Item -Path $VisualEffectsPath -Force | Out-Null }
 Set-ItemProperty -Path $VisualEffectsPath -Name "VisualFXSetting" -Value 2 -Force
-Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "UserPreferencesMask" -Value ([byte[]]@(144,20,7,128,16,0,0,0)) -Force
+[byte[]]$mask = 144,20,7,128,16,0,0,0
+Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "UserPreferencesMask" -Value $mask -Force
 Set-ItemProperty -Path "HKCU:\Control Panel\Desktop\WindowMetrics" -Name "MinAnimate" -Value "0" -Force
 $ExplorerAdvPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
 Set-ItemProperty -Path $ExplorerAdvPath -Name "ListviewAlphaSelect" -Value 0 -Force

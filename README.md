@@ -1,4 +1,4 @@
-# 🚀 MegaPass Windows Optimizer v3.0
+# 🚀 MegaPass Windows Optimizer v3.0.2
 
 > Tool optimasi Windows 10 & 11 sekali klik untuk PC/laptop baru beli atau habis install ulang.
 > Dibuat oleh **MEGAPASS Intra Solusindo** — Servis HP & Laptop Sidoarjo.
@@ -107,9 +107,9 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 ┌─────────────────────────────────────┐
 │  BATCH LAUNCHER (Baris 1-23)        │
 │  - Deteksi hak akses Administrator  │
-│  - Auto-elevasi UAC (cmd.exe com)   │
+│  - Auto-elevasi UAC (escaped path)  │
 │  - Memanggil PowerShell via -split  │
-│  - Path passing via $args[0]        │
+│  - Path passing via $env:SCRIPT_PATH│
 └──────────────┬──────────────────────┘
                │
                ▼
@@ -123,21 +123,13 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 └─────────────────────────────────────┘
 ```
 
-### 🔑 Teknologi Kunci
-- **Dynamic Script Splitter**: Menggunakan `-split` berbasis string penanda, bukan nomor baris statis
-- **Parameter Passing**: Mengirimkan path batch file sebagai argument luar (`$args[0]`) sehingga kebal dari parsing string literal di PowerShell
-- **DISM Single-Query**: Query provisioned packages sekali di luar loop untuk performa optimal
-- **PS 5.1 Compatible**: Semua syntax kompatibel dengan PowerShell bawaan Windows
-
 ---
 
 ## 🐛 Changelog
 
-### v3.0 (Juli 2026)
-- 👑 **REBUILD TOTAL**: Dibuat ulang dari nol untuk menghilangkan seluruh bug warisan.
-- 👑 **BULLETPROOF PARAMETER PASSING**: Menggunakan pembungkus argumen PowerShell `$args[0]` untuk mempassing path batch file asli. 100% kebal dari bug parser jika nama folder mengandung tanda kutip satu (`'`), dollar (`$`), spasi, dsb.
-- 👑 **UAC RUNAS STABILITY**: Menggunakan `cmd.exe` argument list di PowerShell untuk melakukan elevasi UAC dengan aman tanpa resiko string splitting.
-- ⚡ **OPTIMIZED DISM & LIVE PROGRESS**: Query DISM dilakukan satu kali di memori dan progres uninstall setiap aplikasi ditampilkan ke console secara real-time.
+### v3.0.2 (Juli 2026)
+- 👑 **BULLETPROOF UAC PATH ESCAPING**: Menggunakan kombinasi escape backtick PowerShell (`` `"` ``) dan double quotes CMD untuk meloloskan `$env:SCRIPT_PATH` saat UAC elevation. Mencegah kegagalan start proses elevated jika folder instalasi mengandung karakter spasi atau apostrof (`'`).
+- ⚡ **COMPATIBLE ARRAY CASTING**: Mengubah penulisan cast binary array `UserPreferencesMask` menggunakan syntax yang dijamin didukung oleh seluruh edisi PowerShell 5.1.
 - 🧹 Bersih dari byte non-breaking space (NBSP) ilegal dan berakhiran CRLF murni.
 
 ---
