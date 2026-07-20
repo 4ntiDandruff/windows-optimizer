@@ -1,9 +1,8 @@
 @echo off
 :: [AUTO-ADMIN] Elevasi Hak Akses Administrator
-set "SCRIPT_PATH=%~f0"
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath $env:SCRIPT_PATH -Verb RunAs"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath '%comspec%' -ArgumentList '/c \"\"%~f0\"\"' -Verb RunAs"
     exit /b
 )
 
@@ -15,7 +14,7 @@ echo ===================================================
 echo.
 echo [*] Memulai Protokol Optimasi Sistem...
 echo.
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$c = [IO.File]::ReadAllText($env:SCRIPT_PATH) -split '# --- POWERSHELL CORE LOGIC ---'; iex $c[1]"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$c = (Get-Content -LiteralPath $args[0] -Raw) -split '# --- POWERSHELL CORE LOGIC ---'; iex $c[1]" "%~f0"
 echo.
 echo ===================================================
 echo [+] All optimizations applied successfully!
@@ -83,8 +82,8 @@ if (Test-Path $TaskbarPath) {
 }
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAutoHideDesktop" -Value 0 -Force
 
-# 5. Uninstall Bloatware (Omit heavy DISM queries to prevent hangs)
-Write-Host "[*] Uninstalling Windows Bloatware (Fast Mode)..." -ForegroundColor Yellow
+# 5. Uninstall Bloatware
+Write-Host "[*] Uninstalling Windows Bloatware (Safe Mode)..." -ForegroundColor Yellow
 $BloatApps = @(
     "*Cortana*", "*Xbox*", "*Solitaire*", "*OfficeHub*", "*SkypeApp*", "*FeedbackHub*", "*GetHelp*",
     "*ZuneVideo*", "*ZuneMusic*", "*3DBuilder*", "*MixedReality*", "*OneNote*", "*People*",
@@ -95,6 +94,8 @@ $BloatApps = @(
 )
 $ProvisionedApps = Get-AppxProvisionedPackage -Online
 foreach ($app in $BloatApps) {
+    $cleanAppName = $app.Replace("*", "")
+    Write-Host "  [-] Removing $cleanAppName..." -ForegroundColor Gray
     Get-AppxPackage -AllUsers -Name $app | Remove-AppxPackage | Out-Null
     $ProvisionedApps | Where-Object {$_.DisplayName -like $app} | ForEach-Object { Remove-AppxProvisionedPackage -Online -PackageName $_.PackageName | Out-Null }
 }
@@ -150,7 +151,6 @@ winget cache clean --accept-source-agreements | Out-Null
 ipconfig /flushdns | Out-Null
 
 Write-Host "[*] Cleaning Windows Update Download Cache..." -ForegroundColor Yellow
-# Stop wuauserv using command line with a timeout to prevent hanging
 cmd.exe /c "net stop wuauserv /y"
 $DownloadPath = "$env:SystemRoot\SoftwareDistribution\Download"
 if (Test-Path $DownloadPath) {

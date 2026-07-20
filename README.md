@@ -1,4 +1,4 @@
-# 🚀 MegaPass Windows Optimizer v2.6
+# 🚀 MegaPass Windows Optimizer v2.7
 
 > Tool optimasi Windows 10 & 11 sekali klik untuk PC/laptop baru beli atau habis install ulang.
 > Dibuat oleh **MEGAPASS Intra Solusindo** — Servis HP & Laptop Sidoarjo.
@@ -132,7 +132,7 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 
 ## 🐛 Bug Fixes
 
-### v2.6 (Juli 2026)
+### v2.7 (Juli 2026)
 - ✅ **CRITICAL FIX**: Path escaping untuk username dengan apostrophe (contoh: `King's Sulaiman`)
 - ✅ **CRITICAL FIX**: Path escaping untuk username dengan karakter khusus (`#`, space, dll)
 - ✅ **NEW FEATURE**: Disable taskbar auto-hide behavior
