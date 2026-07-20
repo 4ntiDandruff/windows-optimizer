@@ -3,15 +3,12 @@
 set "SCRIPT_PATH=%~f0"
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
-    echo UAC.ShellExecute "cmd.exe", "/c \""%~f0\""", "", "runas", 1 >> "%temp%\getadmin.vbs"
-    "%temp%\getadmin.vbs"
-    del "%temp%\getadmin.vbs"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', $env:SCRIPT_PATH -Verb RunAs"
     exit /b
 )
 
 pushd "%~dp0"
-title MEGAPASS Windows Optimizer v3.0.4
+title MEGAPASS Windows Optimizer v3.0.5
 echo ===================================================
 echo     MEGAPASS INTRA SOLUSINDO - WINDOWS OPTIMIZER
 echo ===================================================
@@ -29,7 +26,7 @@ exit /b
 # --- POWERSHELL ---
 $ErrorActionPreference = "SilentlyContinue"
 
-Write-Host ">>> Starting MegaPass Windows Optimization v3.0.4 <<<" -ForegroundColor Cyan
+Write-Host ">>> Starting MegaPass Windows Optimization v3.0.5 <<<" -ForegroundColor Cyan
 Write-Host "-----------------------------------------------------" -ForegroundColor Gray
 
 # 1. Detect OS

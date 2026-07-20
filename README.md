@@ -1,4 +1,4 @@
-# 🚀 MegaPass Windows Optimizer v3.0.4
+# 🚀 MegaPass Windows Optimizer v3.0.5
 
 > Tool optimasi Windows 10 & 11 sekali klik untuk PC/laptop baru beli atau habis install ulang.
 > Dibuat oleh **MEGAPASS Intra Solusindo** — Servis HP & Laptop Sidoarjo.
@@ -127,7 +127,7 @@ Script menggunakan teknik **Hybrid Batch + PowerShell** dalam satu file `.bat`:
 
 ## 🐛 Changelog
 
-### v3.0.4 (Juli 2026)
+### v3.0.5 (Juli 2026)
 - 👑 **BULLETPROOF UAC PATH ESCAPING**: Menggunakan kombinasi escape backtick PowerShell (`` `"` ``) dan double quotes CMD untuk meloloskan `$env:SCRIPT_PATH` saat UAC elevation. Mencegah kegagalan start proses elevated jika folder instalasi mengandung karakter spasi atau apostrof (`'`).
 - ⚡ **COMPATIBLE ARRAY CASTING**: Mengubah penulisan cast binary array `UserPreferencesMask` menggunakan syntax yang dijamin didukung oleh seluruh edisi PowerShell 5.1.
 - 🧹 Bersih dari byte non-breaking space (NBSP) ilegal dan berakhiran CRLF murni.
