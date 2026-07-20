@@ -1,20 +1,21 @@
 @echo off
 :: [AUTO-ADMIN] Elevasi Hak Akses Administrator
+set "SCRIPT_PATH=%~f0"
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath \"%~f0\" -Verb RunAs"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath $env:SCRIPT_PATH -Verb RunAs"
     exit /b
 )
 
 pushd "%~dp0"
-title MEGAPASS Windows Optimizer v2.5
+title MEGAPASS Windows Optimizer v2.6
 echo ===================================================
 echo     MEGAPASS INTRA SOLUSINDO - WINDOWS OPTIMIZER
 echo ===================================================
 echo.
 echo [*] Memulai Protokol Optimasi Sistem...
 echo.
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$scriptPath = \"%~f0\"; $c = [IO.File]::ReadAllText($scriptPath) -split '# --- POWERSHELL CORE LOGIC ---'; iex $c[1]"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$c = [IO.File]::ReadAllText($env:SCRIPT_PATH) -split '# --- POWERSHELL CORE LOGIC ---'; iex $c[1]"
 echo.
 echo ===================================================
 echo [+] All optimizations applied successfully!
@@ -25,7 +26,7 @@ exit /b
 # --- POWERSHELL CORE LOGIC ---
 $ErrorActionPreference = "SilentlyContinue"
 
-Write-Host ">>> Starting MegaPass Windows Optimization v2.5 <<<" -ForegroundColor Cyan
+Write-Host ">>> Starting MegaPass Windows Optimization v2.6 <<<" -ForegroundColor Cyan
 Write-Host "---------------------------------------------------" -ForegroundColor Gray
 
 # Detect OS Build
