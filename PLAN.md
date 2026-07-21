@@ -19,9 +19,8 @@ Aplikasi harus memuat GUI berbasis XML/XAML yang terpasang di memori Windows Pre
 ### 📋 Struktur Komponen GUI:
 1. **Windows Container:** Jendela utama (ukuran default 600x650 piksel) dengan tema gelap (*Dark Mode Theme*) agar terlihat modern dan profesional.
 2. **Title Header:** Label teks besar berbunyi `"MEGAPASS Intra Solusindo - Maintenance Utility v3.0"`.
-3. **Tab Control / Panel Group:**
-   - **Tab 1: System Optimizations (Tweaks):** Kumpulan Checkbox untuk optimasi sistem.
-   - **Tab 2: Software Installer:** Checkbox untuk instalasi software umum via `winget`.
+3. **Panel Group / Container:**
+   - Kumpulan Checkbox untuk optimasi sistem dalam satu panel layout.
 4. **Log Console Output (RichTextBox / TextBox):** Jendela log read-only di bagian bawah aplikasi untuk menampilkan output proses optimasi secara real-time.
 5. **Action Button:** Tombol utama berlabel **`[ JALANKAN OPTIMASI ]`** yang akan memicu proses eksekusi di latar belakang berdasarkan opsi yang dicentang.
 
@@ -45,15 +44,7 @@ Aplikasi harus memuat GUI berbasis XML/XAML yang terpasang di memori Windows Pre
 *   **[ ] Hide Task View Button** (Multi Windows button hidden)
 *   *Catatan:* Layout Taskbar Alignment harus diatur **tetap di tengah (Center)** (`TaskbarAl = 1`).
 
-### Tab 2: Software Installer (Winget Auto-Install)
-Opsi checkbox untuk mengunduh dan menginstal perangkat lunak dasar secara silent:
-*   **[ ] Google Chrome** (`Google.Chrome`)
-*   **[ ] VLC Media Player** (`VideoLAN.VLC`)
-*   **[ ] WinRAR** (`RARLab.WinRAR`)
-*   **[ ] Adobe Acrobat Reader** (`Adobe.Acrobat.Reader.64-bit`)
-*   **[ ] WhatsApp Desktop** (`WhatsApp.WhatsApp`)
 
----
 
 ## 🛡️ Launcher & Keamanan Path (Anti-Crash)
 Sintaks pembungkus (hybrid launcher) pada baris CMD batch paling atas **wajib** menggunakan metode yang kebal terhadap spasi dan apostrof (`'`) pada nama direktori (misal folder user `King's Sulaiman`).
