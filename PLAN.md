@@ -41,6 +41,9 @@ Aplikasi harus memuat GUI berbasis XML/XAML yang terpasang di memori Windows Pre
 *   **[ ] Disable Telemetry & Diagnostics:** Menonaktifkan service pengumpul data `DiagTrack` dan `dmwappushservice` untuk menghemat penggunaan RAM dan CPU.
 *   **[ ] Uninstall Microsoft OneDrive:** Menghentikan proses `OneDrive.exe` dan meng-uninstall client OneDrive secara bersih dari sistem (mencegah notifikasi storage full).
 *   **[ ] Restore Classic Context Menu (Win 11):** Mengembalikan menu klik kanan klasik ala Windows 10 pada Windows 11 via registry CLSID `{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}` (menghindari menu "Show more options").
+*   **[ ] Disable Hibernation:** Mematikan fitur hibernasi (`powercfg -h off`) untuk menghapus file `hiberfil.sys` secara instan guna membebaskan ruang kosong SSD sebesar beberapa Gigabyte.
+*   **[ ] Auto-Sync Time & Zone:** Menyetel zona waktu default ke SE Asia Standard Time (WIB / Bangkok, Hanoi, Jakarta) dan mengaktifkan sinkronisasi waktu otomatis (Windows Time Service) untuk mencegah error koneksi browser.
+*   **[ ] Disable Ads & Suggestions:** Mematikan saran aplikasi iklan (promosi 3rd party) dan tips yang muncul di menu Start dan halaman Settings via registry `ContentDeliveryManager`.
 
 ### Khusus Windows 11 (Otomatis Aktif jika OS Win 11 Terdeteksi):
 *   **[ ] Hide Widgets Icon** (Taskbar Widgets hidden)
