@@ -37,6 +37,10 @@ Aplikasi harus memuat GUI berbasis XML/XAML yang terpasang di memori Windows Pre
 *   **[ ] File Explorer & Desktop Tweaks:** Mengubah startup File Explorer langsung ke halaman "This PC", mematikan recent/frequent files history di Quick Access, dan memunculkan icon shortcut "This PC" di desktop.
 *   **[ ] Purge Temporary & Update Cache:** Mematikan service `wuauserv` secara aman, menghapus folder cache `SoftwareDistribution\Download`, membersihkan folder temp user, temp system, prefetch, dns cache, winget cache, dan Recycle Bin (dengan pengecualian data profile browser agar login tidak ter-logout).
 *   **[ ] Reset Folder Views & Restart Explorer:** Menghentikan proses `explorer.exe`, menghapus registry `Bags` & `BagMRU` untuk mereset layout folder, lalu menyalakan kembali explorer.
+*   **[ ] Disable Bing Search in Start Menu:** Mematikan fitur saran web Bing di Start Menu via registry Explorer (`DisableSearchBoxSuggestions = 1`) untuk mempercepat pencarian file lokal.
+*   **[ ] Disable Telemetry & Diagnostics:** Menonaktifkan service pengumpul data `DiagTrack` dan `dmwappushservice` untuk menghemat penggunaan RAM dan CPU.
+*   **[ ] Uninstall Microsoft OneDrive:** Menghentikan proses `OneDrive.exe` dan meng-uninstall client OneDrive secara bersih dari sistem (mencegah notifikasi storage full).
+*   **[ ] Restore Classic Context Menu (Win 11):** Mengembalikan menu klik kanan klasik ala Windows 10 pada Windows 11 via registry CLSID `{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}` (menghindari menu "Show more options").
 
 ### Khusus Windows 11 (Otomatis Aktif jika OS Win 11 Terdeteksi):
 *   **[ ] Hide Widgets Icon** (Taskbar Widgets hidden)
