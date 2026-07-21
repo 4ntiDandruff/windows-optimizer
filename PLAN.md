@@ -15,7 +15,9 @@ Aplikasi harus me-render GUI berbasis XAML gelap (Dark Mode) di memori menggunak
 2. **Title Header:** Judul utama aplikasi ("MEGAPASS Maintenance Utility v3.0").
 3. **Panel Group:** Kumpulan checkbox pilihan optimasi dalam satu panel tata letak yang bersih.
 4. **Log Console Box:** Kotak teks read-only di bagian bawah aplikasi untuk menampilkan log progress eksekusi secara real-time.
-5. **Action Button:** Tombol eksekusi utama berlabel "[ JALANKAN OPTIMASI ]".
+5. **Action Buttons:**
+   - Tombol utama **`[ JALANKAN OPTIMASI ]`** untuk menerapkan optimasi terpilih.
+   - Tombol pemulihan **`[ KEMBALIKAN KE DEFAULT ]`** untuk membatalkan semua tweak dan mengembalikan pengaturan Windows ke kondisi bawaan pabrik (Restore Default).
 
 ---
 
@@ -34,10 +36,25 @@ Aplikasi harus menyediakan opsi penyesuaian berbasis angka (numbering) berikut k
 10. **Nonaktifkan Telemetry & Diagnostics:** Mematikan service pengumpul data diagnostic data (`DiagTrack` & `dmwappushservice`) untuk menghemat RAM/CPU.
 11. **Uninstall Microsoft OneDrive:** Menghentikan proses OneDrive dan melakukan uninstall client OneDrive secara bersih dari sistem.
 12. **Tampilan Klik Kanan Klasik Windows 10 di Windows 11:** Memodifikasi registry CLSID untuk mengembalikan menu konteks klasik secara default (menghilangkan menu "Show more options").
-13. **Nonaktifkan Hibernation:** Mematikan fitur hibernasi untuk menghapus file `hiberfil.sys` guna membebaskan ruang penyimpanan SSD C secara instan.
+13. **Nonaktifkan Hibernation:** Mematikan fitur hibernasi (`powercfg -h off`) untuk menghapus file `hiberfil.sys` guna membebaskan ruang penyimpanan SSD C secara instan.
 14. **Sinkronisasi Jam & Zona Waktu Otomatis:** Mengatur zona waktu default ke SE Asia Standard Time (WIB) dan mengaktifkan auto-sync waktu internet (Windows Time Service) untuk mencegah SSL browser error.
 15. **Nonaktifkan Iklan & Saran Aplikasi:** Mematikan iklan saran aplikasi 3rd party dan tips yang muncul di menu Start dan halaman Settings.
 16. **Konfigurasi Taskbar Khusus Windows 11:** Menyembunyikan icon Widgets, Chat, dan Task View, serta mengatur perataan taskbar agar tetap di tengah (Center).
+
+---
+
+## 🔄 Fungsionalitas Tombol "Kembalikan ke Default" (Restore Default)
+Ketika tombol **`[ KEMBALIKAN KE DEFAULT ]`** ditekan, program harus mengeksekusi proses pemulihan (rollback) seluruh tweak sistem ke kondisi bawaan Windows:
+1. **Power Settings:** Mengembalikan power plan ke mode Balanced dan mereset sleep timeout ke bawaan OS.
+2. **Taskbar Auto-Hide:** Mengaktifkan kembali pengaturan auto-hide taskbar bawaan.
+3. **Visual Effects:** Mereset visual effects ke pengaturan standar ("Let Windows choose what's best for my computer").
+4. **Windows Defender:** Mengaktifkan kembali seluruh proteksi Windows Defender (real-time monitoring, behavior monitoring, dan menghapus registry blocks Policies).
+5. **Windows Updates:** Membatalkan pause update dan menyalakan kembali Windows Update Service.
+6. **File Explorer & Desktop:** Mengembalikan default startup File Explorer ke Quick Access dan mengaktifkan kembali history Quick Access.
+7. **Bing Search & Telemetry:** Mengaktifkan kembali Bing Search di Start Menu dan menyalakan kembali service telemetry `DiagTrack` & `dmwappushservice`.
+8. **Classic Context Menu (Win 11):** Menghapus registry CLSID `{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}` agar menu klik kanan Windows 11 kembali ke mode default.
+9. **Hibernation:** Mengaktifkan kembali fitur hibernasi (`powercfg -h on`).
+10. **Ads & Suggestions:** Mengaktifkan kembali saran aplikasi dan tips di menu Start/Settings.
 
 ---
 
