@@ -1,72 +1,50 @@
-# PLAN.md - Cetak Biru MegaPass Windows Optimizer v3.0 (GUI Edition)
+# PLAN.md - Cetak Biru MEGAPASS Windows Optimizer & Debloater
 
-Dokumen ini berisi spesifikasi fungsional dan kebutuhan teknis untuk membangun kembali aplikasi **MegaPass-Optimizer.bat** menggunakan antarmuka grafis (GUI) interaktif. Dokumen ini dirancang sebagai panduan tingkat tinggi untuk LLM agar dapat mengimplementasikan solusi kode secara mandiri tanpa disetir oleh sintaks spesifik.
-
----
-
-## 🎯 Tujuan Utama
-Membuat satu file script hybrid (`.bat` pengeksekusi `.ps1` secara internal) berkinerja tinggi, **zero-dependency**, berjalan **100% offline**, dengan antarmuka grafis **WPF (Windows Presentation Foundation)** yang interaktif untuk memudahkan teknisi memilih fitur optimasi sesuai kebutuhan laptop/PC customer.
+Dokumen ini berisi arsitektur rekayasa sirkuit dan roadmap pengembangan aplikasi **MEGAPASS Windows Optimizer** oleh Megapass Intra Solusindo, Sidoarjo.
 
 ---
 
-## 🏗️ Desain Antarmuka GUI (WPF XAML)
-Aplikasi harus me-render GUI berbasis XAML gelap (Dark Mode) di memori menggunakan assembly `PresentationFramework` bawaan Windows:
-1. **Windows Container:** Jendela utama (Dark Mode, ukuran proporsional).
-2. **Title Header:** Judul utama aplikasi ("MEGAPASS Maintenance Utility v3.0").
-3. **Panel Group:** Kumpulan checkbox pilihan optimasi dalam satu panel tata letak yang bersih.
-4. **Log Console Box:** Kotak teks read-only di bagian bawah aplikasi untuk menampilkan log progress eksekusi secara real-time.
-5. **Action Buttons:**
-   - Tombol utama **`[ JALANKAN OPTIMASI ]`** untuk menerapkan optimasi terpilih.
-   - Tombol pemulihan **`[ KEMBALIKAN KE DEFAULT ]`** untuk membatalkan semua tweak dan mengembalikan pengaturan Windows ke kondisi bawaan pabrik (Restore Default).
+## 🎯 Visi & Landasan Filosofis
+Membuat sistem operasi Windows 10 dan Windows 11 bekerja dengan performa maksimal, latensi rendah, dan hemat sumber daya (RAM/CPU/Disk) melalui pendekatan **fail-safe meja servis**:
+1. **Zero-Bloat & Zero-Dependency:** Berjalan mandiri langsung di memori RAM via `irm https://megapass.web.id/win | iex`.
+2. **Protected Whitelist Mutlak:** Dilarang merusak Windows Defender, Microsoft Store, OneDrive, Print Spooler, Network Stack, Audio, dan font smoothing ClearType.
+3. **Rollback Sekring:** Wajib membuat System Restore Point di detik pertama eksekusi sebelum modifikasi apapun diterapkan.
 
 ---
 
-## ⚙️ Kebutuhan Fitur & Modul Optimasi (Sistem & UI)
-Aplikasi harus menyediakan opsi penyesuaian berbasis angka (numbering) berikut kepada user untuk dieksekusi secara modular di latar belakang:
+## 🗺️ Roadmap Pengembangan
 
-1. **Power Settings & Sleep Timeout:** Mengatur timeout layar & sleep menjadi 5 jam (AC/DC) dan mengaktifkan skema daya High Performance.
-2. **Nonaktifkan Auto-Hide Taskbar:** Mengunci konfigurasi registry agar taskbar tidak hilang otomatis secara permanen.
-3. **Visual Best Performance:** Mematikan animasi window, animasi taskbar, bayangan listview, dan menerapkan visual effect terbaik untuk performa.
-4. **Nonaktifkan Windows Defender:** Mematikan fitur real-time monitoring, behavior monitoring, dan proteksi Defender via registry policies dan cmdlet.
-5. **Pause Windows Updates:** Menunda pembaruan otomatis Windows Update jangka panjang hingga tanggal 31 Desember 2099.
-6. **File Explorer & Desktop Tweaks:** Mengatur File Explorer agar default terbuka ke "This PC", mematikan history search/folder di Quick Access, dan memunculkan shortcut "This PC" di desktop.
-7. **Pembersihan Cache & File Temp:** Mematikan service update sementara untuk membersihkan folder SoftwareDistribution\Download, menghapus folder temp user, temp system, prefetch, dns cache, winget cache, dan Recycle Bin secara aman *(pengecualian: folder data login/profile browser tidak boleh dihapus)*.
-8. **Reset Layout Folder & Restart Explorer:** Merestart proses explorer dan menghapus cache registry Shell Bags/BagMRU untuk mereset tampilan tata letak folder ke default.
-9. **Nonaktifkan Bing Search di Start Menu:** Mematikan saran pencarian web Bing di kolom pencarian menu Start.
-10. **Nonaktifkan Telemetry & Diagnostics:** Mematikan service pengumpul data diagnostic data (`DiagTrack` & `dmwappushservice`) untuk menghemat RAM/CPU.
-11. **Uninstall Microsoft OneDrive:** Menghentikan proses OneDrive dan melakukan uninstall client OneDrive secara bersih dari sistem.
-12. **Tampilan Klik Kanan Klasik Windows 10 di Windows 11:** Memodifikasi registry CLSID untuk mengembalikan menu konteks klasik secara default (menghilangkan menu "Show more options").
-13. **Nonaktifkan Hibernation:** Mematikan fitur hibernasi (`powercfg -h off`) untuk menghapus file `hiberfil.sys` guna membebaskan ruang penyimpanan SSD C secara instan.
-14. **Sinkronisasi Jam & Zona Waktu Otomatis:** Mengatur zona waktu default ke SE Asia Standard Time (WIB) dan mengaktifkan auto-sync waktu internet (Windows Time Service) untuk mencegah SSL browser error.
-15. **Nonaktifkan Iklan & Saran Aplikasi:** Mematikan iklan saran aplikasi 3rd party dan tips yang muncul di menu Start dan halaman Settings.
-16. **Konfigurasi Taskbar Khusus Windows 11:** Menyembunyikan icon Widgets, Chat, dan Task View, serta mengatur perataan taskbar agar tetap di tengah (Center).
+### Fase 1: CLI Core Engine (v2.4 - SELESAI & AKTIF DI PRODUKSI)
+- [x] Runtime Administrator Privilege Guard.
+- [x] Pembuatan System Restore Point otomatis (VSS on, bypass 24h limit).
+- [x] Pembersihan 60+ bloatware UWP sponsor/OEM ganda (akun aktif + master provisioned).
+- [x] Normalisasi & jeda Windows Update hingga tahun 2099 tanpa merusak Microsoft Store (`wuauserv` mode Manual).
+- [x] Proteksi Windows Defender 100% utuh (disentuh 0 baris, bebas blokir AMSI).
+- [x] Microsoft OneDrive dipertahankan utuh (aplikasi, startup, dan sinkronisasi cloud aktif normal).
+- [x] Penonaktifan 20+ service latar belakang yang tidak diperlukan.
+- [x] Optimasi memori virtual (pagefile) proporsional 1.5x RAM fisik dibatasi 35% sisa ruang disk C:.
+- [x] Akselerasi I/O disk NTFS (`disablelastaccess`, `disable8dot3`).
+- [x] Pembebasan Reserved Storage (~7 GB) via DISM.
+- [x] Penonaktifan VBS & Memory Integrity (HVCI) untuk dongkrak performa 5-15%.
+- [x] Penonaktifan AI Recall via DISM dan pencegahan enkripsi senyap SSD BitLocker di Windows 11 24H2.
+- [x] Network latency optimization (Nagle algorithm off, TCPNoDelay, NetworkThrottlingIndex off).
+- [x] Generator laporan audit crystal glass interaktif mandiri langsung di Desktop klien.
+- [x] Gateway distribusi pipa HTTP 307 FastAPI di `megapass.web.id/win`.
 
----
+### Fase 2: Standalone Repository & Komunitas (v2.5 - SAAT INI)
+- [x] Pemisahan ke repository publik GitHub `4ntiDandruff/windows-optimizer`.
+- [x] Dokumentasi teknis terstandarisasi Universal Operator Directive (R8).
+- [x] Lisensi MIT terbuka untuk komunitas teknisi hardware & sysadmin Indonesia.
 
-## 🔄 Fungsionalitas Tombol "Kembalikan ke Default" (Restore Default)
-Ketika tombol **`[ KEMBALIKAN KE DEFAULT ]`** ditekan, program harus mengeksekusi proses pemulihan (rollback) seluruh tweak sistem ke kondisi bawaan Windows:
-1. **Power Settings:** Mengembalikan power plan ke mode Balanced dan mereset sleep timeout ke bawaan OS.
-2. **Taskbar Auto-Hide:** Mengaktifkan kembali pengaturan auto-hide taskbar bawaan.
-3. **Visual Effects:** Mereset visual effects ke pengaturan standar ("Let Windows choose what's best for my computer").
-4. **Windows Defender:** Mengaktifkan kembali seluruh proteksi Windows Defender (real-time monitoring, behavior monitoring, dan menghapus registry blocks Policies).
-5. **Windows Updates:** Membatalkan pause update dan menyalakan kembali Windows Update Service.
-6. **File Explorer & Desktop:** Mengembalikan default startup File Explorer ke Quick Access dan mengaktifkan kembali history Quick Access.
-7. **Bing Search & Telemetry:** Mengaktifkan kembali Bing Search di Start Menu dan menyalakan kembali service telemetry `DiagTrack` & `dmwappushservice`.
-8. **Classic Context Menu (Win 11):** Menghapus registry CLSID `{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}` agar menu klik kanan Windows 11 kembali ke mode default.
-9. **Hibernation:** Mengaktifkan kembali fitur hibernasi (`powercfg -h on`).
-10. **Ads & Suggestions:** Mengaktifkan kembali saran aplikasi dan tips di menu Start/Settings.
+### Fase 3: Interactive GUI Edition (v3.0 - MASA DEPAN)
+- [ ] Implementasi antarmuka visual native berbasis WPF XAML / WinForms ringan tanpa runtime tambahan.
+- [ ] Fitur checkbox modular: Teknisi dapat memilih paket optimasi tertentu (misal: Mode Gaming, Mode Kantor Kasir, Mode Servis Santai).
+- [ ] Console output box real-time terintegrasi di dalam jendela aplikasi.
+- [ ] Tombol **`[ KEMBALIKAN KE DEFAULT ]`** untuk memicu rollback otomatis via System Restore Point `rstrui`.
+- [ ] Pembersih DriverStore usang (membersihkan cache installer driver VGA NVIDIA/AMD/Intel puluhan GB).
 
 ---
 
-## 🛡️ Persyaratan Launcher & Keamanan Path
-1. **Kebal Karakter Khusus:** Launcher batch paling atas wajib menggunakan teknik yang kebal dari crash parsing jika nama folder/file mengandung spasi atau tanda kutip satu/apostrof (seperti `King's Sulaiman`).
-2. **UAC Auto-Elevation:** Otomatis mendeteksi hak akses administrator saat diklik. Jika bukan admin, picu UAC prompt dengan meneruskan path file secara aman menggunakan format argument array (bukan string interpolation langsung yang rentan rusak).
-3. **PowerShell Core Extraction:** Menggunakan dynamic splitter untuk memotong isi file batch dan memanggil bagian PowerShell menggunakan parameter path literal yang aman dari file-locking.
-
----
-
-## 🚦 Aturan Eksekusi & Kualitas Kode
-1. **Non-Blocking GUI:** Proses optimasi harus berjalan di thread latar belakang agar jendela GUI tidak hang/membeku saat tombol eksekusi ditekan.
-2. **Real-Time Logger:** Setiap langkah modul yang berjalan wajib mengirimkan teks log progress-nya ke kotak teks console di GUI secara real-time.
-3. **Kompatibilitas:** Seluruh kode PowerShell harus kompatibel penuh dengan PowerShell 5.1 bawaan Windows 10 & 11 (tidak menggunakan syntax PowerShell 7+).
-4. **Kebersihan File:** File tidak boleh mengandung karakter Non-Breaking Space (NBSP) ilegal dan wajib berakhiran baris CRLF Windows murni.
+<div align="center">
+  <p>Megapass Intra Solusindo • Sidoarjo, Indonesia</p>
+</div>

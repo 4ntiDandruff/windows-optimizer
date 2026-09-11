@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" type="image/png" href="/assets/favicon.png?v=1786275300">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        appleBlue: '#0071E3',
+        appleBlueHover: '#0077ED',
+        appleSlate: '#1D1D1F',
+        appleMuted: '#86868B',
+        appleBg: '#F5F5F7',
+      },
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace']
+      }
+    }
+  }
+}
+</script>
+<title>Windows Debloater v2.4 PowerShell - MEGAPASS</title>
+<meta name="description" content="Windows debloater PowerShell gratis: hapus 60+ bloatware, matikan 21 service berat, optimasi latency PC/laptop kentang Win 10/11 & auto-generate laporan HTML.">
+<link rel="canonical" href="https://megapass.web.id/blog/debloat-win/">
+<meta property="og:title" content="Windows Debloater v2.4 PowerShell - MEGAPASS">
+<meta property="og:description" content="Windows debloater PowerShell gratis: hapus 60+ bloatware, matikan 21 service berat, optimasi latency PC/laptop kentang Win 10/11 & auto-generate laporan HTML.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://megapass.web.id/blog/debloat-win/">
+<meta property="og:image" content="https://megapass.web.id/labs/files/media/windows-debloater-icon.png">
+<meta property="og:site_name" content="MEGAPASS - Servis HP &amp; Laptop Sidoarjo">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Windows Debloater v2.4 PowerShell">
+<meta name="twitter:description" content="Windows debloater PowerShell gratis: hapus 60+ bloatware, matikan 21 service berat, optimasi latency PC/laptop kentang Win 10/11 & auto-generate laporan HTML.">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Windows Debloater v2.4 PowerShell",
+  "description":"Windows debloater PowerShell gratis: hapus 60+ bloatware, matikan 21 service berat, optimasi latency PC/laptop kentang Win 10/11 & auto-generate laporan HTML.",
+  "image":"https://megapass.web.id/labs/files/media/windows-debloater-icon.png",
+  "datePublished":"2025-08-22",
+  "dateModified":"2026-09-10",
+  "author":{"@type":"Person","name":"Hizam Nahari","url":"https://megapass.web.id/teknisi/"},
+  "publisher":{
+    "@type":"LocalBusiness",
+    "name":"MEGAPASS - Servis HP &amp; Laptop Sidoarjo",
+    "url":"https://megapass.web.id",
+    "telephone":"+6289644804034",
+    "address":{"@type":"PostalAddress","streetAddress":"Gang Depan SMA Hang Tuah, RT.11/RW.3, Gelam","addressLocality":"Sidoarjo","addressRegion":"Jawa Timur","postalCode":"61217","addressCountry":"ID"}
+  },
+  "mainEntityOfPage":{
+    "@type":"WebPage",
+    "@id":"https://megapass.web.id/blog/debloat-win/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Beranda","item":"https://megapass.web.id/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://megapass.web.id/blog/"},
+    {"@type":"ListItem","position":3,"name":"Windows Debloater v2.4 PowerShell"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LocalBusiness",
+  "name":"MEGAPASS - Servis HP &amp; Laptop Sidoarjo",
+  "url":"https://megapass.web.id",
+  "telephone":"+6289644804034",
+  "address":{"@type":"PostalAddress","streetAddress":"Gang Depan SMA Hang Tuah, RT.11/RW.3, Gelam","addressLocality":"Sidoarjo","addressRegion":"Jawa Timur","postalCode":"61217","addressCountry":"ID"},
+  "openingHours":"Mo-Su 09:00-21:00",
+  "priceRange":"Rp50.000 - Rp2.000.000"
+}
+</script>
+
+<style>
+html { scroll-behavior: smooth; }
+body {
+  background-color: #F5F5F7;
+  color: #1D1D1F;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ambient Dynamic Iridescent Canvas (AGY Router Spec) */
+.apple-ambient-canvas {
+  background-color: #F5F5F7;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(94, 92, 230, 0.12) 0px, transparent 48%),
+    radial-gradient(at 100% 0%, rgba(0, 113, 227, 0.14) 0px, transparent 48%),
+    radial-gradient(at 50% 30%, rgba(255, 159, 10, 0.08) 0px, transparent 52%),
+    radial-gradient(at 100% 100%, rgba(48, 209, 88, 0.10) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(255, 55, 95, 0.08) 0px, transparent 48%);
+  background-attachment: fixed;
+}
+
+/* Apple Frosted Glass Crystal Cards */
+.crystal-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(32px) saturate(190%);
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.02),
+    0 8px 24px -4px rgba(0, 113, 227, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  transition: transform .18s cubic-bezier(0.16,1,0.3,1), box-shadow .18s cubic-bezier(0.16,1,0.3,1);
+}
+.crystal-card:not(aside):hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.02),
+    0 16px 32px -8px rgba(0, 113, 227, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.hero-crystal {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(244, 248, 255, 0.92) 50%, rgba(254, 244, 249, 0.94) 100%);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1.5px solid rgba(255, 255, 255, 1);
+  border-radius: 24px;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.02),
+    0 16px 36px -8px rgba(0, 113, 227, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
+}
+
+.glass-nav-apple {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Apple Cupertino Tactile Buttons */
+.btn-apple-blue {
+  background: linear-gradient(180deg, #0077ED 0%, #0066CC 100%);
+  color: #FFFFFF;
+  font-weight: 700;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: transform .15s cubic-bezier(0.16,1,0.3,1), box-shadow .15s, background .15s;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+}
+.btn-apple-blue:hover {
+  background: linear-gradient(180deg, #0A84FF 0%, #0071E3 100%);
+  box-shadow: 0 6px 20px rgba(0, 113, 227, 0.38);
+  transform: translateY(-0.5px);
+}
+.btn-apple-blue:active {
+  transform: scale(0.96) translateY(0.5px);
+}
+
+.btn-apple-pill {
+  background: rgba(255, 255, 255, 0.92);
+  color: #1D1D1F;
+  font-weight: 600;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 1);
+  transition: all .15s cubic-bezier(0.16,1,0.3,1);
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+}
+.btn-apple-pill:hover {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.16);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transform: translateY(-0.5px);
+}
+.btn-apple-pill:active {
+  transform: scale(0.96) translateY(0.5px);
+}
+
+/* Article Styling */
+.article-body {
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.article-body h2, .article-body h3 {
+  scroll-margin-top: 5.5rem;
+}
+.article-body h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.85rem;
+  margin-top: 2.2rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  color: #1D1D1F;
+  letter-spacing: -0.015em;
+}
+@media(min-width:640px) {
+  .article-body h2 { font-size: 1.5rem; margin-top: 2.7rem; padding-top: 1.6rem; }
+}
+.article-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.article-body h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  margin-top: 1.4rem;
+  color: #1D1D1F;
+  letter-spacing: -0.01em;
+}
+.article-body p {
+  margin-bottom: 1rem;
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.article-body ul, .article-body ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.3rem;
+  color: #334155;
+  font-size: 1rem;
+}
+.article-body li { margin-bottom: 0.4rem; line-height: 1.8; }
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+.article-body code {
+  background: rgba(0, 113, 227, 0.08);
+  color: #0071E3;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.375rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.article-body pre {
+  background: #0D1117;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+  color: #E6EDF3;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+.article-body pre code {
+  background: none;
+  padding: 0;
+  color: #58A6FF;
+  font-weight: 400;
+}
+.article-body blockquote {
+  border-left: 3px solid #0071E3;
+  background: rgba(0, 113, 227, 0.04);
+  padding: 0.85rem 1.15rem;
+  margin: 1.2rem 0;
+  border-radius: 0 0.75rem 0.75rem 0;
+  color: #1E293B;
+  font-size: 0.95rem;
+}
+
+/* Callout Cards */
+.callout-info {
+  background: rgba(0, 113, 227, 0.05);
+  border: 1px solid rgba(0, 113, 227, 0.2);
+  border-left: 4px solid #0071E3;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin: 1.25rem 0;
+}
+.callout-tip {
+  background: rgba(48, 209, 88, 0.06);
+  border: 1px solid rgba(48, 209, 88, 0.25);
+  border-left: 4px solid #30D158;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin: 1.25rem 0;
+}
+.callout-warn {
+  background: rgba(255, 159, 10, 0.07);
+  border: 1px solid rgba(255, 159, 10, 0.25);
+  border-left: 4px solid #FF9F0A;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin: 1.25rem 0;
+}
+
+/* Progress bar */
+#readProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0071E3, #5E5CE6);
+  z-index: 9999;
+  transition: width .1s linear;
+  pointer-events: none;
+}
+
+/* Reveal motion */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s cubic-bezier(0.16,1,0.3,1), transform .6s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* App badge chips */
+.chip-del {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(244, 63, 94, 0.07);
+  color: #E11D48;
+  border: 1px solid rgba(244, 63, 94, 0.18);
+  margin: 0.18rem;
+}
+.chip-keep {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(16, 185, 129, 0.08);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  margin: 0.18rem;
+}
+
+/* Terminal code wrapper copy */
+.pre-wrap { position: relative; }
+.pre-wrap .copy-code {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #E2E8F0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all .15s;
+}
+.pre-wrap .copy-code:hover {
+  background: rgba(0, 113, 227, 0.4);
+  color: #FFFFFF;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.14); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.26); }
+</style>
+</head>
+<body class="apple-ambient-canvas min-h-screen">
+<div id="readProgress" style="width:0"></div>
+
+<!-- Apple Glass Header -->
+<header class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl">
+  <nav id="mainNav" class="glass-nav-apple rounded-full pl-5 pr-2 py-2 flex items-center justify-between transition-all duration-300">
+    <a href="/" class="flex items-center gap-2.5 min-h-[44px]">
+      <img src="/assets/logo-m.png" alt="Logo MEGAPASS" class="h-8 w-auto" width="32" height="24">
+      <span class="text-slate-900 font-extrabold tracking-tight text-lg">MEGAPASS</span>
+    </a>
+    <div class="hidden lg:flex items-center gap-1">
+      <a href="/" data-nav class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors px-3 py-2 rounded-full hover:bg-black/5">Beranda</a>
+      <a href="/install-windows/" data-nav class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors px-3 py-2 rounded-full hover:bg-black/5">Install Windows</a>
+      <a href="/remote-service/" data-nav class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors px-3 py-2 rounded-full hover:bg-black/5">Remote Service</a>
+      <a href="/home-service/" data-nav class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors px-3 py-2 rounded-full hover:bg-black/5">Home Service</a>
+      <a href="/teknisi/" data-nav class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors px-3 py-2 rounded-full hover:bg-black/5">Teknisi</a>
+      <a href="/blog/" data-nav class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors px-3 py-2 rounded-full hover:bg-black/5">Blog</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="https://wa.me/6289644804034?text=Halo%20MEGAPASS%2C%20saya%20mau%20tanya%20tentang%20servis..." target="_blank" rel="noopener"
+         class="btn-apple-blue text-xs sm:text-sm px-4 sm:px-5 py-2.5 min-h-[40px] flex items-center gap-2">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span class="hidden sm:inline">Chat WhatsApp</span>
+        <span class="sm:hidden">WA</span>
+      </a>
+      <button type="button" id="menuBtn" class="lg:hidden text-slate-800 p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-full hover:bg-black/5" aria-label="Buka menu">
+        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Menu Drawer -->
+<div id="mobileMenu" class="fixed inset-0 z-[60] bg-slate-950/80 hidden flex-col items-center justify-center gap-6" style="backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)">
+  <button type="button" id="menuClose" class="absolute top-6 right-6 text-white p-2 min-w-[44px] min-h-[44px] rounded-full hover:bg-white/10" aria-label="Tutup menu">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <a href="/" class="text-xl text-slate-200 hover:text-white font-medium transition-colors">Beranda</a>
+  <a href="/install-windows/" class="text-xl text-slate-200 hover:text-white font-medium transition-colors">Install Windows</a>
+  <a href="/remote-service/" class="text-xl text-slate-200 hover:text-white font-medium transition-colors">Remote Service</a>
+  <a href="/home-service/" class="text-xl text-slate-200 hover:text-white font-medium transition-colors">Home Service</a>
+  <a href="/teknisi/" class="text-xl text-slate-200 hover:text-white font-medium transition-colors">Teknisi</a>
+  <a href="/blog/" class="text-xl text-slate-200 hover:text-white font-medium transition-colors">Blog</a>
+  <a href="https://wa.me/6289644804034?text=Halo%20MEGAPASS%2C%20saya%20mau%20tanya%20tentang%20servis..." target="_blank" rel="noopener" class="mt-4 btn-apple-blue px-8 py-3.5 text-base">Chat WhatsApp</a>
+</div>
+
+<!-- Hero Section -->
+<section class="pt-28 sm:pt-36 pb-8 sm:pb-12 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="reveal">
+      <!-- Apple Liquid Pill Badge -->
+      <div class="flex items-center gap-2 mb-4 flex-wrap">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 border border-slate-200/80 shadow-sm">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span class="text-[11px] font-mono font-bold tracking-wider text-slate-800 uppercase">POWERSHELL v2.4</span>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 border border-blue-200 font-semibold">28 MODUL</span>
+        </div>
+        <span class="text-slate-500 text-xs sm:text-sm">Diperbarui: 2026</span>
+        <span class="text-slate-300">&bull;</span>
+        <span class="text-slate-500 text-xs sm:text-sm">5 menit baca</span>
+        <span id="viewCount" class="text-slate-500 text-xs sm:text-sm" style="display:inline">&bull; 1x dibaca</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4" style="overflow-wrap:break-word">
+        Windows Debloater v2.4 PowerShell
+      </h1>
+      <p class="text-slate-600 text-base sm:text-lg max-w-3xl leading-relaxed">
+        Script otomatis zero-bloat untuk Windows 10 &amp; 11. Hapus 60+ aplikasi bawaan, matikan 21 background services berat, optimasi latency I/O, atur default This PC, dan generate laporan HTML visual langsung di Desktop.
+      </p>
+
+      <!-- Key Stat Badges -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-6">
+        <div class="crystal-card p-3 sm:p-4 text-center">
+          <span class="text-xl sm:text-2xl font-black text-rose-600 font-mono">60+</span>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">Bloatware Dihapus</p>
+        </div>
+        <div class="crystal-card p-3 sm:p-4 text-center">
+          <span class="text-xl sm:text-2xl font-black text-amber-600 font-mono">21</span>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">Service Dimatikan</p>
+        </div>
+        <div class="crystal-card p-3 sm:p-4 text-center">
+          <span class="text-xl sm:text-2xl font-black text-blue-600 font-mono">~7 GB</span>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">Storage Dibebaskan</p>
+        </div>
+        <div class="crystal-card p-3 sm:p-4 text-center">
+          <span class="text-xl sm:text-2xl font-black text-emerald-600 font-mono">HTML</span>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">Laporan Visual Auto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Terminal One-Liner Box (Cara Pakai Cepat) -->
+<section class="px-4 pb-8 sm:pb-12">
+  <div class="max-w-4xl mx-auto">
+    <div class="hero-crystal p-5 sm:p-7">
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <div class="flex items-center gap-2">
+          <div class="flex gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-rose-400 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+          </div>
+          <span class="text-xs font-mono font-bold text-slate-700 tracking-wide ml-2 uppercase">Jalankan di PowerShell / Terminal (Run as Administrator)</span>
+        </div>
+        <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full font-semibold">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          One-Click Execution
+        </span>
+      </div>
+
+      <div class="bg-slate-900 rounded-xl p-3.5 sm:p-4 border border-slate-800 font-mono text-xs sm:text-sm text-cyan-300 flex items-center justify-between gap-3 shadow-inner overflow-x-auto">
+        <code id="cmdText" class="select-all font-mono whitespace-nowrap">irm https://megapass.web.id/blog/debloat-win/debloat.ps1 | iex</code>
+      </div>
+
+      <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-xs text-slate-500 text-center sm:text-left">
+          Script otomatis membuat <strong>Restore Point</strong> sebelum melakukan perubahan. Aman di-rollback kapan saja.
+        </p>
+        <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('cmdText').textContent).then(function(){var b=document.getElementById('btnCopyMain');b.innerHTML='<svg class=\'w-4 h-4\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M5 13l4 4L19 7\'/></svg> Tersalin!';b.classList.add('bg-emerald-600');setTimeout(function(){b.innerHTML='<svg class=\'w-4 h-4\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z\'/></svg> Salin Perintah';b.classList.remove('bg-emerald-600')},2000)})"
+                id="btnCopyMain" class="btn-apple-blue w-full sm:w-auto px-6 py-3 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 whitespace-nowrap">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          Salin Perintah
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<section class="px-4 pb-4">
+  <div class="max-w-4xl mx-auto">
+    <nav class="flex items-center gap-2 text-xs sm:text-sm text-slate-500" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-blue-600 transition-colors">Beranda</a>
+      <span class="text-slate-300">/</span>
+      <a href="/blog/" class="hover:text-blue-600 transition-colors">Blog</a>
+      <span class="text-slate-300">/</span>
+      <span class="text-slate-700 font-semibold truncate" aria-current="page">Windows Debloater v2.4 PowerShell</span>
+    </nav>
+  </div>
+</section>
+
+<!-- Main Article Body -->
+<section class="px-4 pb-12 sm:pb-20">
+  <div class="max-w-4xl mx-auto">
+    <article id="articleBody" class="article-body crystal-card p-6 sm:p-10 md:p-12">
+
+      <!-- Table of Contents in Apple Glass Card -->
+      <details class="mb-8 bg-slate-50/80 rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-sm">
+        <summary class="font-bold text-sm cursor-pointer select-none text-slate-800 hover:text-blue-600 flex items-center gap-2">
+          <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+          <span>Daftar Isi Artikel</span>
+        </summary>
+        <ul class="mt-3 space-y-1.5 text-sm text-slate-600">
+          <li><a href="#ringkasan-debloater" class="hover:text-blue-600 transition-colors">Windows Debloater v2.4: Mengapa Laptop Butuh Debloat?</a></li>
+          <li><a href="#katalog-bloatware" class="hover:text-blue-600 transition-colors font-semibold text-rose-700">Katalog Lengkap Bloatware yang Dihapus (60+ Aplikasi)</a></li>
+          <li><a href="#aplikasi-dipertahankan" class="hover:text-blue-600 transition-colors font-semibold text-emerald-700">Aplikasi yang Dipertahankan (Safe Whitelist)</a></li>
+          <li><a href="#28-modul-optimasi" class="hover:text-blue-600 transition-colors">28 Modul Optimasi &amp; Pelaporan Sistem</a></li>
+          <li><a href="#fitur-laporan-html" class="hover:text-blue-600 transition-colors">Fitur Baru: Auto-Generate Laporan HTML Before-After</a></li>
+          <li><a href="#cara-menjalankan" class="hover:text-blue-600 transition-colors">Panduan Menjalankan Script (3 Langkah)</a></li>
+          <li><a href="#keamanan-rollback" class="hover:text-blue-600 transition-colors">Kompatibilitas, Keamanan &amp; Restore Point</a></li>
+          <li><a href="#disclaimer" class="hover:text-blue-600 transition-colors">Disclaimer &amp; Integritas Source Code</a></li>
+        </ul>
+      </details>
+
+      <h2 id="ringkasan-debloater">Windows Debloater v2.4: Mengapa Laptop Butuh Debloat?</h2>
+      <p>
+        Instalasi standar Windows 10 dan Windows 11 saat ini memuat puluhan aplikasi bawaan (UWP bloatware), layanan pelacakan analitik (telemetry), serta fitur background yang membebani memori RAM dan disk I/O. Pada prosesor hemat daya (Intel Core i3 generasi lama, Celeron, AMD A-Series, atau Ryzen generasi awal) dan penyimpanan HDD/eMMC, beban latar belakang ini memicu <strong>disk usage 100%</strong> dan respon sistem yang lambat.
+      </p>
+      <p>
+        <strong>Windows Debloater v2.4 dari MEGAPASS</strong> dirancang khusus oleh teknisi hardware bersertifikasi BNSP di meja servis Sidoarjo untuk membersihkan seluruh beban sistem tersebut secara terukur, otomatis, dan fail-safe.
+      </p>
+
+      <!-- Section: Katalog Bloatware yang Dihapus -->
+      <h2 id="katalog-bloatware" class="text-rose-700 border-t border-slate-200 pt-6">Katalog Lengkap Bloatware yang Dihapus (60+ Aplikasi)</h2>
+      <p>
+        Script memindai paket UWP (Appx) baik pada user aktif maupun provisioned image sistem (agar tidak terinstall ulang saat ada update). Berikut rincian aplikasi bawaan yang dibersihkan:
+      </p>
+
+      <!-- Category 1: Microsoft Utilities Bloat -->
+      <div class="mb-5 bg-white/70 rounded-xl border border-slate-200/80 p-4">
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+          1. Microsoft &amp; Windows Utilities Tidak Perlu (17 Apps)
+        </h3>
+        <p class="text-xs text-slate-500 mb-3">Aplikasi utilitas bawaan yang jarang digunakan pengguna harian dan memakan penyimpanan latar belakang:</p>
+        <div class="flex flex-wrap">
+          <span class="chip-del">Microsoft.3DBuilder</span>
+          <span class="chip-del">Microsoft.3DViewer</span>
+          <span class="chip-del">Microsoft.Microsoft3DViewer</span>
+          <span class="chip-del">Microsoft.BingFinance</span>
+          <span class="chip-del">Microsoft.BingNews</span>
+          <span class="chip-del">Microsoft.BingSports</span>
+          <span class="chip-del">Microsoft.BingWeather</span>
+          <span class="chip-del">Microsoft.BingSearch</span>
+          <span class="chip-del">Microsoft.BingTranslator</span>
+          <span class="chip-del">Microsoft.GetHelp</span>
+          <span class="chip-del">Microsoft.Getstarted (Tips)</span>
+          <span class="chip-del">Microsoft.MicrosoftOfficeHub</span>
+          <span class="chip-del">Microsoft.MicrosoftSolitaireCollection</span>
+          <span class="chip-del">Microsoft.MixedReality.Portal</span>
+          <span class="chip-del">Microsoft.Office.OneNote (UWP)</span>
+          <span class="chip-del">Microsoft.OneConnect</span>
+          <span class="chip-del">Microsoft.People</span>
+          <span class="chip-del">Microsoft.Print3D</span>
+          <span class="chip-del">Microsoft.SkypeApp</span>
+          <span class="chip-del">Microsoft.Wallet</span>
+          <span class="chip-del">Microsoft.WindowsFeedbackHub</span>
+          <span class="chip-del">Microsoft.WindowsMaps</span>
+        </div>
+      </div>
+
+      <!-- Category 2: Xbox & Gaming Overhead -->
+      <div class="mb-5 bg-white/70 rounded-xl border border-slate-200/80 p-4">
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+          2. Xbox &amp; Gaming Background Services (7 Apps)
+        </h3>
+        <p class="text-xs text-slate-500 mb-3">Service background Xbox yang selalu aktif merekam sesi dan menghabiskan resource pada PC kerja/kantor:</p>
+        <div class="flex flex-wrap">
+          <span class="chip-del">Microsoft.XboxApp</span>
+          <span class="chip-del">Microsoft.Xbox.TCUI</span>
+          <span class="chip-del">Microsoft.XboxGameOverlay</span>
+          <span class="chip-del">Microsoft.XboxGamingOverlay</span>
+          <span class="chip-del">Microsoft.XboxIdentityProvider</span>
+          <span class="chip-del">Microsoft.XboxSpeechToTextOverlay</span>
+          <span class="chip-del">Microsoft.GamingApp</span>
+        </div>
+      </div>
+
+      <!-- Category 3: Komunikasi & Telemetri Sosial -->
+      <div class="mb-5 bg-white/70 rounded-xl border border-slate-200/80 p-4">
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+          3. Phone, Chat &amp; Komunikasi Bawaan (6 Apps)
+        </h3>
+        <p class="text-xs text-slate-500 mb-3">Aplikasi sinkronisasi yang terus berjalan di latar belakang:</p>
+        <div class="flex flex-wrap">
+          <span class="chip-del">Microsoft.YourPhone (Phone Link)</span>
+          <span class="chip-del">Microsoft.WindowsPhone</span>
+          <span class="chip-del">MicrosoftTeams (Personal Chat)</span>
+          <span class="chip-del">Microsoft.Todos</span>
+          <span class="chip-del">Microsoft.PowerAutomateDesktop</span>
+          <span class="chip-del">Microsoft.WindowsCommunicationsApps</span>
+          <span class="chip-del">Microsoft.OutlookForWindows</span>
+        </div>
+      </div>
+
+      <!-- Category 4: Media, Cortana & Win11 AI Bloat -->
+      <div class="mb-5 bg-white/70 rounded-xl border border-slate-200/80 p-4">
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+          4. Media Jadul &amp; AI Windows 11 (8 Apps)
+        </h3>
+        <p class="text-xs text-slate-500 mb-3">Fitur AI baru Windows 11 24H2 dan media player lawas:</p>
+        <div class="flex flex-wrap">
+          <span class="chip-del">Microsoft.Cortana</span>
+          <span class="chip-del">Microsoft.ZuneMusic (Groove)</span>
+          <span class="chip-del">Microsoft.ZuneVideo (Movies &amp; TV)</span>
+          <span class="chip-del">Clipchamp.Clipchamp</span>
+          <span class="chip-del">Microsoft.Copilot</span>
+          <span class="chip-del">Microsoft.Windows.Ai.Copilot.Provider</span>
+          <span class="chip-del">MicrosoftWindows.Client.AIX (Recall)</span>
+          <span class="chip-del">MicrosoftWindows.Client.Photon (Recall)</span>
+          <span class="chip-del">MicrosoftCorporationII.QuickAssist</span>
+          <span class="chip-del">MicrosoftCorporationII.MicrosoftFamily</span>
+        </div>
+      </div>
+
+      <!-- Category 5: Iklan & Silent Background Installers -->
+      <div class="mb-5 bg-white/70 rounded-xl border border-slate-200/80 p-4">
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+          5. Iklan &amp; Content Delivery Manager (5 Apps)
+        </h3>
+        <p class="text-xs text-slate-500 mb-3">Komponen yang secara otomatis mengunduh game dan iklan rekomendasi ke Start Menu:</p>
+        <div class="flex flex-wrap">
+          <span class="chip-del">Microsoft.Advertising.Xaml</span>
+          <span class="chip-del">Microsoft.Services.Store.Engagement</span>
+          <span class="chip-del">Microsoft.Windows.ContentDeliveryManager</span>
+          <span class="chip-del">Microsoft.Windows.ParentalControls</span>
+          <span class="chip-del">Microsoft.Windows.PeopleExperienceHost</span>
+        </div>
+      </div>
+
+      <!-- Category 6: Third-Party & OEM Games -->
+      <div class="mb-6 bg-white/70 rounded-xl border border-slate-200/80 p-4">
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+          6. OEM Preinstalled &amp; Third-Party Games (22 Apps)
+        </h3>
+        <p class="text-xs text-slate-500 mb-3">Game dan sponsor yang sering dipasang secara diam-diam oleh vendor laptop dan Microsoft:</p>
+        <div class="flex flex-wrap">
+          <span class="chip-del">Candy Crush Saga</span>
+          <span class="chip-del">Candy Crush Soda Saga</span>
+          <span class="chip-del">Candy Crush Friends</span>
+          <span class="chip-del">Bubble Witch 3 Saga</span>
+          <span class="chip-del">Farm Heroes Saga</span>
+          <span class="chip-del">March of Empires</span>
+          <span class="chip-del">Disney Magic Kingdoms</span>
+          <span class="chip-del">FarmVille 2 Country Escape</span>
+          <span class="chip-del">Asphalt 8 Airborne</span>
+          <span class="chip-del">Royal Revolt 2</span>
+          <span class="chip-del">Pandora Media</span>
+          <span class="chip-del">Eclipse Manager</span>
+          <span class="chip-del">Actipro Software</span>
+          <span class="chip-del">Duolingo</span>
+          <span class="chip-del">Autodesk SketchBook</span>
+          <span class="chip-del">Spotify Music</span>
+          <span class="chip-del">LinkedIn for Windows</span>
+          <span class="chip-del">Facebook</span>
+          <span class="chip-del">TikTok</span>
+          <span class="chip-del">Amazon Prime Video</span>
+          <span class="chip-del">Disney+</span>
+          <span class="chip-del">Netflix</span>
+          <span class="chip-del">Plex</span>
+          <span class="chip-del">ASUS PC Assistant</span>
+          <span class="chip-del">McAfee Security</span>
+        </div>
+      </div>
+
+      <!-- Section: Whitelist Aplikasi yang Dipertahankan -->
+      <h2 id="aplikasi-dipertahankan" class="text-emerald-700 border-t border-slate-200 pt-6">Aplikasi yang Dipertahankan (Safe Whitelist)</h2>
+      <p>
+        MEGAPASS Debloater menerapkan sistem seleksi ketat. Aplikasi produktivitas esensial harian <strong>sama sekali tidak disentuh</strong> sehingga laptop tetap berfungsi normal tanpa kehilangan fungsionalitas:
+      </p>
+      <div class="bg-emerald-50/70 rounded-xl border border-emerald-200/80 p-4 mb-6">
+        <div class="flex flex-wrap">
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Calculator (Kalkulator)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Camera (Kamera Laptop)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Photos (Viewer Gambar Default)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Paint (Editor Gambar Ringan)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Sticky Notes (Catatan Cepat)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Clock &amp; Alarms (Jam &amp; Timer)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Sound Recorder (Perekam Suara)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Windows Terminal</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Microsoft Store (Untuk Pasang App)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Microsoft Edge (Browser Default)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Windows Defender (100% Aktif &amp; Utuh)</span>
+          <span class="chip-keep"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Microsoft OneDrive (Sinkronisasi Aktif)</span>
+        </div>
+      </div>
+
+      <!-- Section: 28 Modul Optimasi -->
+      <h2 id="28-modul-optimasi">28 Modul Optimasi &amp; Pelaporan Sistem</h2>
+      <p>Berikut alur kerja komprehensif dari modul 0 hingga 28:</p>
+
+      <h3>0. Buat Restore Point Otomatis</h3>
+      <p>Mengaktifkan System Restore pada drive C: dan membuat checkpoint rollback berlabel MEGAPASS Debloat dengan bypass batas cooldown 24 jam via registry.</p>
+
+      <h3>0.5. Baseline Snapshot WMI/CIM</h3>
+      <p>Mencatat kondisi riil sebelum debloat: jumlah RAM terpakai, total proses aktif, service yang sedang berjalan, dan sisa ruang kosong drive C: untuk laporan komparasi.</p>
+
+      <h3>1. Pembersihan 60+ Bloatware Apps</h3>
+      <p>Menghapus aplikasi UWP yang tidak diperlukan (termasuk LinkedIn, Microsoft To-Do, Clipchamp, paket sponsor OEM) pada seluruh profil user dan memblokir instalasi ulang via provisioned package list serta mematikan Start Menu cloud content stubs.</p>
+
+      <h3>2. Matikan Telemetry &amp; Data Collection</h3>
+      <p>Menghentikan scheduled tasks pengirim diagnostic data (CEIP, WER, DiagTrack) ke server analitik.</p>
+
+      <h3>3. Matikan Cortana, Copilot &amp; Recall</h3>
+      <p>Menonaktifkan web search Cortana, tombol Copilot pada taskbar, serta fitur screenshot otomatis Recall di Windows 11 24H2.</p>
+
+      <h3>4. Matikan Iklan &amp; Suggestions</h3>
+      <p>Menonaktifkan rekomendasi aplikasi dan iklan promosi di Start Menu, Lock Screen, dan File Explorer.</p>
+
+      <h3>5. Perkuat Privasi Sistem</h3>
+      <p>Mematikan Advertising ID, pelacakan lokasi geolokasi, sinkronisasi clipboard cloud, dan pengiriman sampel tulisan tangan.</p>
+
+      <h3>6. Matikan Background Apps</h3>
+      <p>Memutus izin eksekusi aplikasi UWP di background secara global untuk menghemat siklus CPU dan baterai laptop.</p>
+
+      <h3>7. Matikan 20 Background Service Berat</h3>
+      <p>Menonaktifkan service yang sering memicu disk usage 100%: DiagTrack, SysMain (Superfetch), Windows Search (WSearch), Xbox Live services, WerSvc, CDPSvc, DPS, dan Delivery Optimization (DoSvc). Service notifikasi WpnService dipertahankan agar Focus Assist Priority Only dan Action Center tetap berfungsi stabil.</p>
+
+      <h3>8. Optimasi Performa &amp; Power Plan</h3>
+      <p>Menyetel Visual Effects ke mode Custom meja servis: mempertahankan font halus (ClearType sub-pixel smoothing), thumbnail Explorer, translucent selection, bayangan label desktop, drag window, serta kontrol animasi jendela esensial, sembari mematikan transparansi dan efek berat lainnya untuk efisiensi render CPU/GPU. Otomatis mengaktifkan Focus Assist ke mode Priority Only (via WNF broadcast &amp; registry) agar pengguna tidak diganggu popup spam.</p>
+
+      <h3>9. Perkuat Network Privacy</h3>
+      <p>Mematikan Wi-Fi Sense, update P2P delivery antar-komputer lokal, Remote Assistance tanpa izin, dan autoplay removable media.</p>
+
+      <h3>10. Bersihkan Explorer &amp; Taskbar</h3>
+      <p class="font-semibold text-slate-800">
+        Konfigurasi Explorer profesional:
+      </p>
+      <ul>
+        <li><strong>Default Buka ke This PC</strong>: File Explorer terbuka langsung menampilkan daftar partisi harddisk/SSD dan drive komputer, bukan Quick Access atau Home.</li>
+        <li><strong>Tombol Task View Dimatikan</strong>: Menghilangkan tombol Task View pada taskbar untuk ruang taskbar yang lebih lega.</li>
+        <li><strong>Hidden Files Tetap Aman (Disembunyikan)</strong>: File sistem dan folder tersembunyi sengaja tetap disembunyikan agar pengguna awam tidak salah hapus file sistem Windows krusial.</li>
+        <li><strong>Ekstensi File Dikenal Disembunyikan</strong>: Opsi bawaan <em>Hide extensions for known file types</em> aktif tercentang untuk kenyamanan visual antarmuka pengguna sehari-hari.</li>
+        <li><strong>Widgets, Chat &amp; Searchbox Taskbar Disesuaikan</strong>: Tampilan antarmuka desktop bersih, widget cuaca nonaktif, dan search box panjang penuh tetap tersedia.</li>
+      </ul>
+
+      <h3>11. Kontrol Windows Update Manual</h3>
+      <p>Mencegah forced restart otomatis saat laptop sedang dipakai bekerja serta mengubah instalasi Microsoft Store ke mode manual.</p>
+
+      <h3>12. Deep Cleanup (Temp, Cache, Residue)</h3>
+      <p>Membersihkan folder Temp, Prefetch, SoftwareDistribution\Download, DeliveryOptimization cache, thumbnail cache, dan mengosongkan Recycle Bin semua drive (membebaskan 500MB hingga 5GB+ ruang penyimpanan).</p>
+
+      <h3>13. Jeda Windows Update Hingga 2099 &amp; Target Version Lock</h3>
+      <p>Menjeda jadwal update otomatis hingga tahun 2099, mengunci versi Windows saat ini, dan menerapkan kebijakan NoAutoUpdate di Group Policy, dengan service wuauserv tetap disetel Manual agar Microsoft Store tetap 100% aktif menginstal dan memperbarui aplikasi.</p>
+
+      <h3>14. Matikan SmartScreen &amp; Phishing Filter</h3>
+      <p>Menonaktifkan SmartScreen dan filter phishing web untuk menghilangkan popup peringatan keamanan berlebih saat membuka aplikasi utilitas pihak ketiga, sementara Windows Defender tetap dibiarkan 100% aktif dan utuh tanpa disentuh sama sekali.</p>
+
+      <h3>15. Kembalikan Klik Kanan Klasik Windows 11</h3>
+      <p>Mengaktifkan context menu klasik Windows 11 secara instan tanpa perlu lagi klik "Show more options".</p>
+
+      <h3>16. Matikan Reserved Storage (~7GB)</h3>
+      <p>Mengembalikan ruang partisi ~7GB yang biasanya dicadangkan sistem untuk update Windows melalui DISM.</p>
+
+      <h3>17. Matikan VBS &amp; Memory Integrity (HVCI)</h3>
+      <p>Menonaktifkan Virtualization-Based Security yang menyedot performa prosesor lama, memberikan lonjakan responsivitas 5-15%.</p>
+
+      <h3>18. Matikan Edge Startup Boost &amp; Background</h3>
+      <p>Mencegah Microsoft Edge berjalan diam-diam sejak sistem pertama kali booting.</p>
+
+      <h3>19. OneDrive Dipertahankan Utuh</h3>
+      <p>OneDrive dipertahankan utuh tanpa mematikan proses, tanpa mencabut dari startup, dan tanpa menyentuh sinkronisasi cloud agar file dokumen dan desktop tetap tersinkronisasi normal.</p>
+
+      <h3>20. Optimasi Pagefile Dinamis</h3>
+      <p>Mendeteksi kapasitas RAM fisik dan mengatur ukuran virtual memory pagefile secara tetap (1.5x RAM fisik, batas aman 8GB) untuk meniadakan fragmentasi disk.</p>
+
+      <h3>21. Matikan Search Indexer Scheduled Tasks</h3>
+      <p>Mematikan tugas indexing otomatis yang kerap membebani harddisk mekanik (disarankan gunakan Everything search untuk pencarian instan).</p>
+
+      <h3>22. Optimasi NTFS &amp; Disk I/O</h3>
+      <p>Menonaktifkan pencatatan timestamp akses terakhir (disablelastaccess) dan nama pendek 8.3 untuk meringankan overhead NTFS hingga 20%.</p>
+
+      <h3>23. Percepat Boot &amp; Shutdown</h3>
+      <p>Menurunkan timeout service dan aplikasi yang macet dari 5 detik menjadi 2 detik serta mengaktifkan AutoEndTasks.</p>
+
+      <h3>24. Matikan Storage Sense Auto-Run</h3>
+      <p>Mencegah sistem menghapus file di folder Downloads dan Recycle Bin secara sepihak.</p>
+
+      <h3>25. Hapus Network Throttling</h3>
+      <p>Membuka limit reservasi bandwidth 80% Windows dan mematikan algoritma Nagle (TCP No Delay) pada adapter jaringan untuk latency browsing yang lebih rendah.</p>
+
+      <h3>26. Tingkatkan Responsiveness UI</h3>
+      <p>Mengatur MenuShowDelay ke 0ms (respons menu klik kanan seketika), mematikan animasi minimize/maximize, dan mematikan cursor blink overhead.</p>
+
+      <h3>27. Post-Debloat Snapshot</h3>
+      <p>Mengambil data metrik pasca-eksekusi dan menghitung selisih (delta) penghematan RAM, pengurangan proses latar belakang, dan penambahan kapasitas disk C:.</p>
+
+      <h3>28. Auto-Generate Laporan HTML di Desktop</h3>
+      <p>Membuat file laporan interaktif <code>MEGAPASS-Debloat-Report.html</code> langsung di Desktop pengguna dan membukanya otomatis di browser.</p>
+
+      <!-- Section: Showcase Laporan HTML -->
+      <h2 id="fitur-laporan-html" class="text-blue-600 border-t border-slate-200 pt-6">Fitur Baru: Auto-Generate Laporan HTML Before-After</h2>
+      <p>
+        Salah satu pembaruan terbesar pada versi 2.4 adalah pembuatan laporan visual otomatis. Begitu proses debloat selesai, script akan menyusun file laporan mandiri di folder Desktop pengguna dengan spesifikasi:
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
+        <div class="bg-white/80 p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-mono font-bold text-blue-600 uppercase">Kartu Metrik Delta</span>
+          <p class="text-xs text-slate-600 mt-1">Menampilkan angka riil RAM yang berhasil dihemat, jumlah aplikasi yang disingkirkan, dan ruang disk yang dibebaskan.</p>
+        </div>
+        <div class="bg-white/80 p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-mono font-bold text-emerald-600 uppercase">Grafik Bar Komparasi</span>
+          <p class="text-xs text-slate-600 mt-1">Visualisasi grafik batang sebelum vs sesudah pada jumlah proses aktif, background service, dan konsumsi memori.</p>
+        </div>
+      </div>
+
+      <!-- Section: Cara Menjalankan -->
+      <h2 id="cara-menjalankan">Panduan Menjalankan Script (3 Langkah)</h2>
+      <ol>
+        <li>Klik kanan ikon tombol Start Windows, pilih <strong>Terminal (Admin)</strong> atau <strong>PowerShell (Admin)</strong>.</li>
+        <li>Salin dan tempel satu baris perintah berikut, lalu tekan <strong>Enter</strong>:</li>
+      </ol>
+      <pre><code>irm https://megapass.web.id/blog/debloat-win/debloat.ps1 | iex</code></pre>
+      <ol start="3">
+        <li>Tunggu proses berjalan (sekitar 3 hingga 5 menit). Setelah selesai, file laporan akan otomatis terbuka di browser Anda.</li>
+        <li><strong>Restart komputer / laptop</strong> untuk menerapkan seluruh perubahan registri dan service.</li>
+      </ol>
+
+      <!-- Section: Keamanan & Rollback -->
+      <h2 id="keamanan-rollback">Kompatibilitas, Keamanan &amp; Restore Point</h2>
+      <p>
+        Script telah diuji stabil pada <strong>Windows 10 22H2</strong> dan <strong>Windows 11 23H2 / 24H2</strong>. Pada awal proses, script secara otomatis membuat System Restore Point berlabel <code>MEGAPASS Debloat v2.4</code>.
+      </p>
+      <p>
+        Jika sewaktu-waktu Anda ingin mengembalikan kondisi semula, cukup buka <strong>System Restore</strong> (ketik <code>rstrui.exe</code> di menu Run) dan pilih titik pemulihan tersebut.
+      </p>
+
+      <!-- Section: Disclaimer -->
+      <h2 id="disclaimer">Disclaimer &amp; Integritas Source Code</h2>
+      <p>
+        Script ini 100% gratis, terbuka, dan transparan. Tidak ada data yang dikirimkan ke server eksternal mana pun dan tidak ada dependensi software pihak ketiga yang dipasang. Untuk konsultasi perawatan laptop dan optimasi hardware mendalam, Anda dapat menghubungi tim teknisi kami di Sidoarjo.
+      </p>
+
+      <!-- Share Buttons -->
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap mt-8 pt-6 border-t border-slate-200">
+        <span class="text-slate-500 text-xs sm:text-sm font-semibold">Bagikan:</span>
+        <a href="https://wa.me/?text=Windows%20Debloater%20v2.4%20PowerShell%20https%3A//megapass.web.id/blog/debloat-win/" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold hover:bg-emerald-100 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//megapass.web.id/blog/debloat-win/" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-blue-50 text-blue-700 text-xs font-bold hover:bg-blue-100 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+        <a href="https://twitter.com/intent/tweet?text=Windows%20Debloater%20v2.4%20PowerShell&url=https%3A//megapass.web.id/blog/debloat-win/" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-sky-50 text-sky-700 text-xs font-bold hover:bg-sky-100 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Twitter
+        </a>
+        <button type="button" onclick="_copyUrl(this,'https://megapass.web.id/blog/debloat-win/')"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-slate-100 text-slate-700 text-xs font-bold hover:bg-slate-200 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+          Salin Tautan
+        </button>
+      </div>
+
+      <!-- Author Card -->
+      <div class="mt-8 pt-6 border-t border-slate-200 flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+          HN
+        </div>
+        <div>
+          <a href="/teknisi/" class="font-bold text-sm text-slate-900 hover:text-blue-600 transition-colors">Hizam Nahari</a>
+          <p class="text-slate-500 text-xs mt-0.5">Kepala Teknisi MEGAPASS &bull; Praktisi Servis Laptop BNSP &bull; Sidoarjo</p>
+        </div>
+      </div>
+
+    </article>
+  </div>
+</section>
+
+<!-- Soft-Sell CTA Section -->
+<section class="px-4 pb-12 sm:pb-16">
+  <div class="max-w-4xl mx-auto">
+    <div class="hero-crystal p-6 sm:p-8 text-center flex flex-col items-center">
+      <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Laptop Masih Terasa Panas atau Lambat?</h3>
+      <p class="text-sm text-slate-600 max-w-xl mb-6">
+        Debloat membersihkan beban sistem software. Jika kipas berputar kencang atau usia pasta pendingin di atas 1-2 tahun, bawa ke workshop MEGAPASS Sidoarjo untuk pembersihan debu, repaste thermal premium, atau upgrade SSD.
+      </p>
+      <a href="https://wa.me/6289644804034?text=Halo%20Megapass%2C%20saya%20mau%20konsultasi%20servis%20laptop%20setelah%20baca%20Windows%20Debloater" target="_blank" rel="noopener"
+         class="btn-apple-blue px-7 py-3 text-sm font-bold flex items-center gap-2">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+        <span>Konsultasi WhatsApp Sekarang</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Related Articles -->
+<section class="px-4 pb-12">
+  <div class="max-w-4xl mx-auto">
+    <h3 class="font-bold text-base sm:text-lg text-slate-800 mb-4 flex items-center gap-2">
+      <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+      Artikel Terkait Meja Servis
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <a href="/blog/kasus-ic-power/" class="crystal-card p-4 hover:border-blue-300 transition-colors block">
+        <span class="text-[11px] font-mono text-blue-600 uppercase font-semibold">Hardware Repair</span>
+        <h4 class="font-bold text-sm text-slate-900 mt-1 mb-1">Ganti IC Power Laptop</h4>
+        <p class="text-slate-500 text-xs line-clamp-2">Dokumentasi penanganan korslet 19V VIN dan penggantian IC Power laptop mati total dengan step-by-step foto.</p>
+      </a>
+      <a href="/install-windows/" class="crystal-card p-4 hover:border-blue-300 transition-colors block">
+        <span class="text-[11px] font-mono text-emerald-600 uppercase font-semibold">OS Deployment</span>
+        <h4 class="font-bold text-sm text-slate-900 mt-1 mb-1">Jasa Install Windows Sidoarjo</h4>
+        <p class="text-slate-500 text-xs line-clamp-2">Layanan instalasi bersih Windows 10/11 original bebas bloatware dengan backup data aman di workshop MEGAPASS.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Apple Clean Footer -->
+<footer class="bg-white/80 border-t border-slate-200/80 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-5 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+    <div>
+      <div class="flex items-center gap-2.5 mb-3">
+        <img src="/assets/logo-m.png" alt="Logo MEGAPASS" class="h-7 w-auto" width="28" height="21">
+        <span class="text-slate-900 font-extrabold tracking-tight text-base">MEGAPASS</span>
+      </div>
+      <p class="text-slate-500 text-xs leading-relaxed">
+        Pusat servis HP, laptop, dan komputer bergaransi di Sidoarjo. Dikerjakan oleh teknisi bersertifikasi BNSP dengan standar fail-safe sirkuit.
+      </p>
+    </div>
+    <div>
+      <h4 class="text-slate-900 font-bold text-xs uppercase tracking-wider mb-3">Kontak</h4>
+      <ul class="space-y-2 text-xs text-slate-600">
+        <li>Gang Depan SMA Hang Tuah, Gelam, Candi, Sidoarjo 61217</li>
+        <li>Buka: Setiap hari 09.00 - 21.00 WIB</li>
+        <li><a href="https://wa.me/6289644804034" target="_blank" rel="noopener" class="text-blue-600 hover:underline">WA 0896-4480-4034</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-slate-900 font-bold text-xs uppercase tracking-wider mb-3">Ekosistem</h4>
+      <ul class="space-y-2 text-xs text-slate-600">
+        <li><a href="/" class="hover:text-blue-600 transition-colors">Beranda</a></li>
+        <li><a href="/install-windows/" class="hover:text-blue-600 transition-colors">Install Windows</a></li>
+        <li><a href="/remote-service/" class="hover:text-blue-600 transition-colors">Remote Service</a></li>
+        <li><a href="/home-service/" class="hover:text-blue-600 transition-colors">Home Service</a></li>
+        <li><a href="/teknisi/" class="hover:text-blue-600 transition-colors">Teknisi</a></li>
+        <li><a href="/blog/" class="hover:text-blue-600 transition-colors">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-slate-900 font-bold text-xs uppercase tracking-wider mb-3">Sosial Media</h4>
+      <div class="flex gap-2.5">
+        <a href="https://www.instagram.com/megapass.id/" target="_blank" rel="noopener" aria-label="Instagram MEGAPASS"
+           class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://wa.me/6289644804034" target="_blank" rel="noopener" aria-label="WhatsApp MEGAPASS"
+           class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-slate-200/80 py-4 text-center text-xs text-slate-500">
+    &copy; 2026 Megapass Intra Solusindo. Spesialis Servis HP, Laptop &amp; Komputer Sidoarjo.
+  </div>
+</footer>
+
+<!-- Interactive Scripts -->
+<script>
+// Reveal on scroll
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(function(el){observer.observe(el)});
+
+// Mobile menu toggle
+var menuBtn=document.getElementById('menuBtn'),mobileMenu=document.getElementById('mobileMenu'),menuClose=document.getElementById('menuClose'),iconOpen=document.getElementById('menuIconOpen'),iconClose=document.getElementById('menuIconClose');
+if(menuBtn&&mobileMenu){
+  menuBtn.addEventListener('click',function(){
+    mobileMenu.classList.remove('hidden');
+    mobileMenu.classList.add('flex');
+    if(iconOpen)iconOpen.classList.add('hidden');
+    if(iconClose)iconClose.classList.remove('hidden');
+    document.body.style.overflow='hidden';
+  });
+  menuClose.addEventListener('click',function(){
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
+    if(iconOpen)iconOpen.classList.remove('hidden');
+    if(iconClose)iconClose.classList.add('hidden');
+    document.body.style.overflow='';
+  });
+}
+
+// Reading progress bar
+(function(){
+  var bar=document.getElementById('readProgress');
+  if(!bar)return;
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(!ticking){
+      ticking=true;
+      requestAnimationFrame(function(){
+        var h=document.documentElement.scrollHeight-window.innerHeight;
+        bar.style.width=h>0?Math.min(100,window.scrollY/h*100)+'%':'0';
+        ticking=false;
+      });
+    }
+  },{passive:true});
+})();
+
+// View count hit
+fetch('/api/views/debloat-win',{method:'POST'}).then(function(r){return r.json()}).then(function(d){
+  if(d.ok){
+    var vc=document.getElementById('viewCount');
+    if(vc){vc.innerHTML='&bull; '+d.views+'x dibaca';vc.style.display='inline';}
+  }
+}).catch(function(){});
+
+// Code block copy buttons
+document.querySelectorAll('.article-body pre').forEach(function(pre){
+  var wrap=document.createElement('div');
+  wrap.className='pre-wrap';
+  pre.parentNode.insertBefore(wrap,pre);
+  wrap.appendChild(pre);
+  var btn=document.createElement('button');
+  btn.className='copy-code';
+  btn.type='button';
+  btn.textContent='Copy';
+  btn.setAttribute('aria-label','Salin kode');
+  btn.addEventListener('click',function(){
+    var code=pre.querySelector('code');
+    var text=(code||pre).textContent;
+    _copyCode(btn,text);
+  });
+  wrap.appendChild(btn);
+});
+function _copyCode(btn,text){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      btn.textContent='Copied!';
+      btn.classList.add('bg-emerald-600');
+      setTimeout(function(){btn.textContent='Copy';btn.classList.remove('bg-emerald-600')},2000);
+    }).catch(function(){_copyCodeFb(btn,text);});
+  }else{_copyCodeFb(btn,text);}
+}
+function _copyCodeFb(btn,text){
+  var ta=document.createElement('textarea');
+  ta.value=text;
+  ta.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(ta);
+  ta.focus();ta.select();
+  try{
+    document.execCommand('copy');
+    btn.textContent='Copied!';
+    btn.classList.add('bg-emerald-600');
+    setTimeout(function(){btn.textContent='Copy';btn.classList.remove('bg-emerald-600')},2000);
+  }catch(e){}
+  document.body.removeChild(ta);
+}
+
+// Copy URL link button with native SVG
+function _copyUrl(btn,url){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(function(){
+      var oldHtml=btn.innerHTML;
+      btn.innerHTML='<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Tersalin!';
+      setTimeout(function(){btn.innerHTML=oldHtml;},2000);
+    }).catch(function(){_copyFallback(btn,url);});
+  }else{_copyFallback(btn,url);}
+}
+function _copyFallback(btn,url){
+  var ta=document.createElement('textarea');
+  ta.value=url;
+  ta.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(ta);
+  ta.focus();ta.select();
+  try{
+    document.execCommand('copy');
+    var oldHtml=btn.innerHTML;
+    btn.innerHTML='<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Tersalin!';
+    setTimeout(function(){btn.innerHTML=oldHtml;},2000);
+  }catch(e){}
+  document.body.removeChild(ta);
+}
+
+// Active nav highlight
+(function(){
+  var p=location.pathname,host=location.hostname;
+  var nav=document.querySelector('header nav');
+  if(!nav)return;
+  nav.querySelectorAll('a[data-nav]').forEach(function(a){
+    var u=new URL(a.href);
+    if(u.hostname!==host)return;
+    var h=u.pathname;
+    var match=(h==='/'&&p==='/')||(h!=='/'&&p.startsWith(h));
+    if(match){
+      a.classList.remove('text-slate-600','hover:bg-black/5');
+      a.classList.add('text-blue-600','bg-blue-50','font-semibold');
+    }
+  });
+})();
+</script>
+</body>
+</html>
