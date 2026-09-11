@@ -16,10 +16,22 @@ if (-not $isAdmin) {
     return
 }
 
+# 64-bit OS Architecture Guard (cegah redirector WOW64 pada PowerShell x86)
+if ([Environment]::Is64BitOperatingSystem -and [IntPtr]::Size -eq 4) {
+    Write-Host ""
+    Write-Host "  [!!] Script ini berjalan di PowerShell 32-bit (x86) pada sistem operasi 64-bit!" -ForegroundColor Red
+    Write-Host "  [**] Mohon buka 'Windows PowerShell' versi 64-bit (bukan x86) sebagai Administrator." -ForegroundColor Yellow
+    Write-Host ""
+    return
+}
+
 $ver = "2.4"
 $steps = 28
 $ErrorActionPreference = 'SilentlyContinue'
 $fail = 0
+
+$sysDrive = if ($env:SystemDrive) { $env:SystemDrive } else { "C:" }
+$sysRoot  = if ($env:SystemRoot)  { $env:SystemRoot }  else { "$sysDrive\Windows" }
 
 # ponytail: $total dihapus -- counter parsial misleading, tiap modul sudah punya counter sendiri
 $cRemoved = 0; $cTaskOff = 0; $cSvcOff = 0; $cCleaned = 0
@@ -68,7 +80,6 @@ try {
     # Pastikan service VSS hidup agar pembuatan restore point sukses
     Set-Service -Name VSS -StartupType Manual -ErrorAction SilentlyContinue
     Start-Service -Name VSS -ErrorAction SilentlyContinue
-    $sysDrive = if ($env:SystemDrive) { $env:SystemDrive } else { "C:" }
     Enable-ComputerRestore -Drive "$sysDrive\" -ErrorAction Stop
     # ponytail: bypass 24h cooldown via registry
     $rpFreq = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore"
@@ -90,7 +101,7 @@ $bRAM_Free = $(if ($bOS -and $bOS.FreePhysicalMemory) { [math]::Round($bOS.FreeP
 $bRAM_Used = [math]::Max(0, $bRAM_Total - $bRAM_Free)
 $bProc = (Get-Process).Count
 $bSvc = (Get-Service | Where-Object { $_.Status -eq 'Running' }).Count
-$diskC = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'" -ErrorAction SilentlyContinue
+$diskC = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='$sysDrive'" -ErrorAction SilentlyContinue
 $bDiskFree = $(if ($diskC -and $diskC.FreeSpace) { [math]::Round($diskC.FreeSpace / 1GB, 1) } else { 0 })
 $bOSName = $(if ($bOS -and $bOS.Caption) { "$($bOS.Caption) ($($bOS.Version))" } else { "Windows 10/11" })
 $bCPUName = $(if ($bCPU -and $bCPU.Name) { $bCPU.Name.Trim() } else { "Standard Processor" })
@@ -568,11 +579,11 @@ Log "[12/$steps] Bersihkan temp files & cache..." Yellow
 
 $tempPaths = @(
     $env:TEMP,
-    "C:\Windows\Temp",
-    "C:\Windows\Prefetch",
+    "$sysRoot\Temp",
+    "$sysRoot\Prefetch",
     # ponytail: tambahan untuk laptop kentang -- hemat 500MB-5GB
-    "C:\Windows\SoftwareDistribution\Download",
-    "C:\Windows\SoftwareDistribution\DeliveryOptimization"
+    "$sysRoot\SoftwareDistribution\Download",
+    "$sysRoot\SoftwareDistribution\DeliveryOptimization"
 )
 foreach ($tp in $tempPaths) {
     if (Test-Path $tp) {
@@ -815,15 +826,15 @@ try {
     }
     RegSet "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" "AutomaticManagedPagefile" 0 "DWord"
 
-    # Set fixed pagefile di C: via CIM & Registry fallback
-    $pf = Get-CimInstance Win32_PageFileSetting -ErrorAction SilentlyContinue | Where-Object { $_.Name -like "C:*" }
+    # Set fixed pagefile di system drive via CIM & Registry fallback
+    $pf = Get-CimInstance Win32_PageFileSetting -ErrorAction SilentlyContinue | Where-Object { $_.Name -like "$sysDrive*" }
     if ($pf) {
         Set-CimInstance -InputObject $pf -Property @{InitialSize = $pfMin; MaximumSize = $pfSize} -ErrorAction SilentlyContinue
     } else {
-        New-CimInstance -ClassName Win32_PageFileSetting -Property @{Name = "C:\pagefile.sys"; InitialSize = $pfMin; MaximumSize = $pfSize} -ErrorAction SilentlyContinue
+        New-CimInstance -ClassName Win32_PageFileSetting -Property @{Name = "$sysDrive\pagefile.sys"; InitialSize = $pfMin; MaximumSize = $pfSize} -ErrorAction SilentlyContinue
     }
     # Registry fallback memastikan kernel membaca alokasi paging file jika CIM dibatasi
-    Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "PagingFiles" -Value @("C:\pagefile.sys $pfMin $pfSize") -Type MultiString -Force -ErrorAction SilentlyContinue
+    Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "PagingFiles" -Value @("$sysDrive\pagefile.sys $pfMin $pfSize") -Type MultiString -Force -ErrorAction SilentlyContinue
 
     Ok "Pagefile dioptimasi: ${pfMin}MB-${pfSize}MB (RAM: ${ramMB}MB)"
 } catch {
@@ -964,7 +975,7 @@ $aRAM_Free = $(if ($aOS -and $aOS.FreePhysicalMemory) { [math]::Round($aOS.FreeP
 $aRAM_Used = [math]::Max(0, $bRAM_Total - $aRAM_Free)
 $aProc = (Get-Process).Count
 $aSvc = (Get-Service | Where-Object { $_.Status -eq 'Running' }).Count
-$aDiskC = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'" -ErrorAction SilentlyContinue
+$aDiskC = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='$sysDrive'" -ErrorAction SilentlyContinue
 $aDiskFree = $(if ($aDiskC -and $aDiskC.FreeSpace) { [math]::Round($aDiskC.FreeSpace / 1GB, 1) } else { 0 })
 
 # Delta & persentase

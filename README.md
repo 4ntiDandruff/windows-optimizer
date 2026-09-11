@@ -206,7 +206,7 @@ location: /blog/debloat-win/debloat.ps1
 # 2. Uji ketersediaan file skrip utama
 $ curl -sI https://megapass.web.id/blog/debloat-win/debloat.ps1 | grep -E "HTTP|content-length"
 HTTP/2 200
-content-length: 102042
+content-length: 102605
 
 # 3. Uji integritas baris pertama skrip via curl follow-redirect
 $ curl -sL https://megapass.web.id/win | head -n 5
