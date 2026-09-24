@@ -236,7 +236,7 @@ Saat melakukan refactoring atau penambahan fitur di masa depan, patuhi aturan ba
 ## 10. Potensi Pengembangan ke Depan
 
 * `[+]` **GUI Selector Ringan**: Menambahkan opsi antarmuka berbasis WinForms atau WPF sederhana jika teknisi ingin memilih paket optimasi tertentu via centang visual.
-* `[+]` **Telemetry Webhook Opsional**: Pengiriman ringkasan status kesehatan sistem pasca-debloat ke dashboard bengkel Megapass jika disetujui pengguna.
+* `[+]` **Telemetry Webhook Opsional**: Pengiriman ringkasan status kesehatan sistem pasca-debloat ke dashboard meja servis Megapass jika disetujui pengguna.
 * `[+]` **Pembersih DriverStore Usang**: Modul pembersihan repositori driver VGA lama milik vendor NVIDIA/AMD/Intel yang sering memakan ruang penyimpanan hingga belasan gigabyte.
 
 ---
